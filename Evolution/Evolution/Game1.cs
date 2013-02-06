@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using EvolutionLibrary;
+using Evolution.tiles;
 
 namespace Evolution
 {
@@ -17,12 +19,36 @@ namespace Evolution
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
+
+        public GraphicsDeviceManager Graphics
+        {
+            get { return graphics; }
+            set { graphics = value; }
+        }
         SpriteBatch spriteBatch;
+        public SpriteBatch SpriteBatch
+        {
+            get { return spriteBatch; }
+            set { spriteBatch = value; }
+        }
+        private Camera2d cam;
+
+        public Camera2d Cam
+        {
+            get { return cam; }
+            set { cam = value; }
+        }
+
+        MouseState mouseStateCurrent, mouseStatePrevious;
+
+        Grass grass;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            this.IsMouseVisible = true;
         }
 
         /// <summary>
@@ -36,6 +62,7 @@ namespace Evolution
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            grass = new Grass(this, 10, 10);
         }
 
         /// <summary>
@@ -46,8 +73,8 @@ namespace Evolution
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
+            cam = new Camera2d(GraphicsDevice.Viewport);
         }
 
         /// <summary>
@@ -70,8 +97,26 @@ namespace Evolution
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                Components.Add(new Grass(this, 200, 200));
+            }
 
+            mouseStateCurrent = Mouse.GetState();
+
+            if (mouseStateCurrent.ScrollWheelValue > mouseStatePrevious.ScrollWheelValue)
+            {
+                cam.Zoom += 1;
+            }
+            if (mouseStateCurrent.ScrollWheelValue < mouseStatePrevious.ScrollWheelValue)
+            {
+                cam.Zoom -= 1;
+            }
+
+            mouseStatePrevious = mouseStateCurrent;
+            // TODO: Add your update logic here
+            cam.Update(new Vector2(202, 202));
+            
             base.Update(gameTime);
         }
 
@@ -83,7 +128,11 @@ namespace Evolution
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred,
+                BlendState.AlphaBlend,
+                null, null, null, null,
+                cam.Transform);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

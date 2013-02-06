@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evolution", "Evolution\Evolution\Evolution.csproj", "{E7F390D0-71C1-4E45-8896-526D6FB6C679}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "EvolutionContent", "Evolution\EvolutionContent\EvolutionContent.contentproj", "{AE4B8A7E-3273-48D1-ACF0-AA1F6BCD934F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvolutionContent", "Evolution\EvolutionContent\EvolutionContent.contentproj", "{AE4B8A7E-3273-48D1-ACF0-AA1F6BCD934F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvolutionLibrary", "EvolutionLibrary\EvolutionLibrary.csproj", "{F8FF1858-082B-4C56-98E8-78FB644748E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{E7F390D0-71C1-4E45-8896-526D6FB6C679}.Release|x86.Build.0 = Release|x86
 		{AE4B8A7E-3273-48D1-ACF0-AA1F6BCD934F}.Debug|x86.ActiveCfg = Debug|x86
 		{AE4B8A7E-3273-48D1-ACF0-AA1F6BCD934F}.Release|x86.ActiveCfg = Release|x86
+		{F8FF1858-082B-4C56-98E8-78FB644748E0}.Debug|x86.ActiveCfg = Debug|x86
+		{F8FF1858-082B-4C56-98E8-78FB644748E0}.Debug|x86.Build.0 = Debug|x86
+		{F8FF1858-082B-4C56-98E8-78FB644748E0}.Release|x86.ActiveCfg = Release|x86
+		{F8FF1858-082B-4C56-98E8-78FB644748E0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
