@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
-using Evolution.tiles;
+using Evolution.Genetics;
 
 namespace Evolution
 {
@@ -19,29 +19,8 @@ namespace Evolution
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-
-        public GraphicsDeviceManager Graphics
-        {
-            get { return graphics; }
-            set { graphics = value; }
-        }
         SpriteBatch spriteBatch;
-        public SpriteBatch SpriteBatch
-        {
-            get { return spriteBatch; }
-            set { spriteBatch = value; }
-        }
-        private Camera2d cam;
-
-        public Camera2d Cam
-        {
-            get { return cam; }
-            set { cam = value; }
-        }
-
-        MouseState mouseStateCurrent, mouseStatePrevious;
-
-        Grass grass;
+        private double mutateRate = 0.85;
 
         public Game1()
         {
@@ -49,89 +28,63 @@ namespace Evolution
             Content.RootDirectory = "Content";
 
             this.IsMouseVisible = true;
+            
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
-            grass = new Grass(this, 10, 10);
+
+            Chromosome c = new Chromosome();
+            c.addGene("life", 5);
+            c.addGene("speed", 10);
+            c.addGene("attack", 15);
+            c.addGene("lol", 20);
+
+            Chromosome c1 = new Chromosome();
+            c1.addGene("life", 25);
+            c1.addGene("speed", 30);
+            c1.addGene("attack", 35);
+            c1.addGene("lol", 40);
+
+            Console.WriteLine("Parent 1:\t\t" + c.BinaryString);
+            Console.WriteLine("Parent 2:\t\t" + c1.BinaryString);
+
+            List<Chromosome> children = c1.Reproduce(c);
+            foreach (Chromosome child in children)
+            {
+                double r = Randomiser.nextDouble();
+                Console.WriteLine("Child:\t\t\t" + child.BinaryString);
+                if (r < mutateRate)
+                {
+                    child.Mutate();
+                    Console.WriteLine("Child Mutation: " + child.BinaryString);
+                }
+                
+            }
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
-            cam = new Camera2d(GraphicsDevice.Viewport);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                Components.Add(new Grass(this, 200, 200));
-            }
-
-            mouseStateCurrent = Mouse.GetState();
-
-            if (mouseStateCurrent.ScrollWheelValue > mouseStatePrevious.ScrollWheelValue)
-            {
-                cam.Zoom += 1;
-            }
-            if (mouseStateCurrent.ScrollWheelValue < mouseStatePrevious.ScrollWheelValue)
-            {
-                cam.Zoom -= 1;
-            }
-
-            mouseStatePrevious = mouseStateCurrent;
-            // TODO: Add your update logic here
-            cam.Update(new Vector2(202, 202));
-            
+       
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,
-                null, null, null, null,
-                cam.Transform);
+            spriteBatch.Begin();
             spriteBatch.End();
 
             base.Draw(gameTime);

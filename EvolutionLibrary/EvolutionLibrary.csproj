@@ -60,8 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera2D.cs" />
-    <Compile Include="MapGenerator.cs" />
-    <Compile Include="PerlinNoise.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
