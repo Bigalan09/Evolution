@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
 using Evolution.Genetics;
+using Evolution.Creature;
 
 namespace Evolution
 {
@@ -20,7 +21,9 @@ namespace Evolution
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private double mutateRate = 0.85;
+
+        RedCreature rCreature;
+        BlackCreature bCreature;
 
         public Game1()
         {
@@ -28,45 +31,20 @@ namespace Evolution
             Content.RootDirectory = "Content";
 
             this.IsMouseVisible = true;
-            
         }
 
         protected override void Initialize()
         {
+            rCreature = new RedCreature(30, 30, 0.5f, new Chromosome());
+            bCreature = new BlackCreature(60, 30, 0.5f, new Chromosome());
             base.Initialize();
-
-            Chromosome c = new Chromosome();
-            c.addGene("life", 5);
-            c.addGene("speed", 10);
-            c.addGene("attack", 15);
-            c.addGene("lol", 20);
-
-            Chromosome c1 = new Chromosome();
-            c1.addGene("life", 25);
-            c1.addGene("speed", 30);
-            c1.addGene("attack", 35);
-            c1.addGene("lol", 40);
-
-            Console.WriteLine("Parent 1:\t\t" + c.BinaryString);
-            Console.WriteLine("Parent 2:\t\t" + c1.BinaryString);
-
-            List<Chromosome> children = c1.Reproduce(c);
-            foreach (Chromosome child in children)
-            {
-                double r = Randomiser.nextDouble();
-                Console.WriteLine("Child:\t\t\t" + child.BinaryString);
-                if (r < mutateRate)
-                {
-                    child.Mutate();
-                    Console.WriteLine("Child Mutation: " + child.BinaryString);
-                }
-                
-            }
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            rCreature.LoadContent(Content);
+            bCreature.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -76,15 +54,18 @@ namespace Evolution
 
         protected override void Update(GameTime gameTime)
         {
-       
+            rCreature.Update(gameTime);
+            bCreature.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.OliveDrab);
 
             spriteBatch.Begin();
+            rCreature.Draw(spriteBatch, gameTime);
+            bCreature.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);
