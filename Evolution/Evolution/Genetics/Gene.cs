@@ -12,23 +12,33 @@ namespace Evolution.Genetics
         private static readonly Regex binary = new Regex("^[01]{1,32}$", RegexOptions.Compiled);
         private const int maxValue = 100;
 
-        private string type = "";
-        private int value = 0;
+        private PropertyType type;
+        private int value = 0;      
         private string binaryString = "";
+
+        public PropertyType Type
+        {
+            get { return type; }
+        }
+
+        public int Value
+        {
+            get { return this.value; }
+        }
 
         public string BinaryString
         {
             get { return binaryString; }
         }
 
-        public Gene(string type, int value)
+        public Gene(PropertyType type, int value)
         {
             this.type = type;
             this.value = value;
             this.binaryString = IntToBinary(value);
         }
 
-        public Gene(string type, string binaryString)
+        public Gene(PropertyType type, string binaryString)
         {
             this.type = type;
             this.value = BinaryToInt(binaryString);

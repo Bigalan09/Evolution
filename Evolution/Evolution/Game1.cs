@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
 using Evolution.Genetics;
 using Evolution.Creature;
+using Evolution.Resource;
+using Evolution.Utils;
 
 namespace Evolution
 {
@@ -19,32 +21,49 @@ namespace Evolution
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        Vector2 screenBounds = Vector2.Zero;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        RedCreature rCreature;
-        BlackCreature bCreature;
+        ResourceManager resourceManager;
+        CreatureGroup redGroup;
+        CreatureGroup blackGroup;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 100;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 100;
+
+            screenBounds = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            graphics.IsFullScreen = false;
 
             this.IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            rCreature = new RedCreature(30, 30, 0.5f, new Chromosome());
-            bCreature = new BlackCreature(60, 30, 0.5f, new Chromosome());
+            resourceManager = new ResourceManager(this);
+            resourceManager.addResource(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
+
+            redGroup = new CreatureGroup(CreatureType.Red, this);
+            blackGroup = new CreatureGroup(CreatureType.Black, this);
+
+            redGroup.addCreature(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
+            blackGroup.addCreature(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            rCreature.LoadContent(Content);
-            bCreature.LoadContent(Content);
+            resourceManager.LoadContent(Content);
+
+            redGroup.LoadContent(Content);
+            blackGroup.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -54,8 +73,9 @@ namespace Evolution
 
         protected override void Update(GameTime gameTime)
         {
-            rCreature.Update(gameTime);
-            bCreature.Update(gameTime);
+            redGroup.Update(gameTime);
+            blackGroup.Update(gameTime);
+            resourceManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -64,8 +84,9 @@ namespace Evolution
             GraphicsDevice.Clear(Color.OliveDrab);
 
             spriteBatch.Begin();
-            rCreature.Draw(spriteBatch, gameTime);
-            bCreature.Draw(spriteBatch, gameTime);
+            redGroup.Draw(spriteBatch, gameTime);
+            blackGroup.Draw(spriteBatch, gameTime);
+            resourceManager.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

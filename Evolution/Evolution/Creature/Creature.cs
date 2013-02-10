@@ -11,11 +11,32 @@ namespace Evolution.Creature
 {
     class Creature : Vehicle
     {
-        private Chromosome chromosome = new Chromosome();
+        private Chromosome chromosome;
 
-        public Creature(float x, float y, float mass, float max_force = 0.3f, float max_speed = 0.93f)
-            : base(x, y, mass, max_force, max_speed)
+        internal Chromosome Chromosome
         {
+            get { return chromosome; }
+            set { chromosome = value; SetProperties(); }
+        }
+
+        public Creature(float x, float y, Chromosome chromo = null)
+            : base(x, y)
+        {
+            if (chromo != null)
+            {
+                chromosome = chromo;
+            }
+            else
+            {
+                chromosome = new Chromosome();
+            }
+        }
+
+        private void SetProperties()
+        {
+            this.Mass = (1 / ((Gene)chromosome.GetGene(PropertyType.Body_Mass)).Value);
+            this.Max_Force = this.Mass + 0.2f;
+            this.Max_Force = (1 / ((Gene)chromosome.GetGene(PropertyType.Max_Speed)).Value);
         }
 
         public override void LoadContent(ContentManager content)

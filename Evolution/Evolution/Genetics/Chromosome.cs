@@ -6,6 +6,18 @@ using System.Text;
 
 namespace Evolution.Genetics
 {
+    public enum PropertyType
+    {
+        Max_Speed,
+        Defence,
+        Strength,
+        Resource_Capacity,
+        Body_Mass,
+        Aquatic,
+        Age_Death,
+        Gather_Rate
+    }
+
     class Chromosome
     {
         private List<Gene> genes = new List<Gene>();
@@ -18,7 +30,7 @@ namespace Evolution.Genetics
 
         public Chromosome()
         {
-
+            CreateRandomChromosome();
         }
 
         public Chromosome(List<Gene> genes)
@@ -35,16 +47,23 @@ namespace Evolution.Genetics
             binaryString = GenesToBinary();
         }
 
-        public void addGene(string type, string binaryString)
+        public void addGene(PropertyType type, string binaryString)
         {
             Gene g = new Gene(type, binaryString);
             this.addGene(g);
         }
 
-        public void addGene(string type, int value)
+        public void addGene(PropertyType type, int value)
         {
             Gene g = new Gene(type, value);
             this.addGene(g);
+        }
+
+        private void CreateRandomChromosome()
+        {
+            addGene(PropertyType.Max_Speed, Randomiser.nextInt(0, 100));
+            addGene(PropertyType.Body_Mass, Randomiser.nextInt(0, 100));
+            addGene(PropertyType.Aquatic, Randomiser.nextInt(0, 1));
         }
 
         private string GenesToBinary()
@@ -95,6 +114,16 @@ namespace Evolution.Genetics
             children.Add(child2);
 
             return children;
+        }
+
+        public Gene GetGene(PropertyType property)
+        {
+            foreach (Gene g in genes)
+            {
+                if (g.Type == property)
+                    return g;
+            }
+            return null;
         }
     }
 }

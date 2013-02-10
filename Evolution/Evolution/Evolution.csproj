@@ -75,12 +75,15 @@
     <Compile Include="Creature\BlackCreature.cs" />
     <Compile Include="Creature\Creature.cs" />
     <Compile Include="Creature\Entity.cs" />
+    <Compile Include="Creature\CreatureGroup.cs" />
     <Compile Include="Creature\RedCreature.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
     <Compile Include="Genetics\Gene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Resource\Resource.cs" />
+    <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="Utils\Randomiser.cs" />
     <Compile Include="Creature\Vehicle.cs" />
   </ItemGroup>

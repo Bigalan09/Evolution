@@ -19,7 +19,12 @@ namespace Evolution.Creature
         public Texture2D Texture
         {
             get { return texture; }
-            set { texture = value; }
+            set
+            {
+                texture = value;
+                this.bounds = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+                this.origin = new Vector2(this.bounds.Width / 2, this.bounds.Height / 2);
+            }
         }
 
         public Rectangle Bounds
@@ -48,6 +53,7 @@ namespace Evolution.Creature
         public virtual void LoadContent(ContentManager content)
         {
             this.bounds = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.origin = new Vector2(this.bounds.Width / 2, this.bounds.Height / 2);
         }
 
         public virtual void Update(GameTime gameTime)
