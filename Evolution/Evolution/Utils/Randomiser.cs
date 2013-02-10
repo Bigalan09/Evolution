@@ -15,7 +15,10 @@ namespace Evolution.Utils
         {
             if (canInitalise)
             {
-                rand = new Random(seed);
+                if (seed == -1)
+                    rand = new Random();
+                else
+                    rand = new Random(seed);
             }
         }
 

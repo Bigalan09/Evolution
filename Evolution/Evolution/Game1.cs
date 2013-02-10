@@ -22,6 +22,12 @@ namespace Evolution
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         Vector2 screenBounds = Vector2.Zero;
+
+        public Vector2 ScreenBounds
+        {
+            get { return screenBounds; }
+        }
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -45,14 +51,16 @@ namespace Evolution
 
         protected override void Initialize()
         {
+            Randomiser.Instance(-1);
+
             resourceManager = new ResourceManager(this);
             resourceManager.addResource(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
 
             redGroup = new CreatureGroup(CreatureType.Red, this);
             blackGroup = new CreatureGroup(CreatureType.Black, this);
 
-            redGroup.addCreature(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
-            blackGroup.addCreature(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
+            redGroup.CreatePopulation(10);
+            blackGroup.CreatePopulation(10);
 
             base.Initialize();
         }

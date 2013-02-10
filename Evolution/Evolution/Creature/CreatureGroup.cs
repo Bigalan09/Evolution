@@ -1,4 +1,5 @@
 ﻿using Evolution.Genetics;
+using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,7 +22,8 @@ namespace Evolution.Creature
         private List<Creature> creaturesToAdd = new List<Creature>();
         private List<Creature> creaturesToRemove = new List<Creature>();
         private CreatureType type;
-        private Game1 gameRef; 
+        private Game1 gameRef;
+        private Vector2 spawnPoint; 
 
         public CreatureGroup(CreatureType type, Game1 gameRef)
         {
@@ -83,6 +85,19 @@ namespace Evolution.Creature
             foreach (Creature c in creatures)
             {
                 c.Draw(spriteBatch, gameTime);
+            }
+        }
+
+        public void CreatePopulation(int populationSize)
+        {
+            spawnPoint = new Vector2(Randomiser.nextInt(100, (int)gameRef.ScreenBounds.X - 200), Randomiser.nextInt(100, (int)gameRef.ScreenBounds.Y - 200));
+            for (int i = 0; i < populationSize; i++)
+            {
+                double angle = Randomiser.nextDouble() * Math.PI * 2;
+                double radius = Math.Sqrt(Randomiser.nextDouble()) * 100;
+                float x = (float)(spawnPoint.X + radius * Math.Cos(angle));
+                float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
+                addCreature(x, y);
             }
         }
     }
