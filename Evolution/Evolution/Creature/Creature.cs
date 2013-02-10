@@ -30,13 +30,18 @@ namespace Evolution.Creature
             {
                 chromosome = new Chromosome();
             }
+            SetProperties();
         }
 
         private void SetProperties()
         {
-            this.Mass = (1 / ((Gene)chromosome.GetGene(PropertyType.Body_Mass)).Value);
-            this.Max_Force = this.Mass + 0.2f;
-            this.Max_Force = (1 / ((Gene)chromosome.GetGene(PropertyType.Max_Speed)).Value);
+            this.Mass = ((Gene)chromosome.GetGene(PropertyType.Body_Mass)).Value / 25;
+            this.Max_Force = 0.001f;
+            this.Max_Speed = ((Gene)chromosome.GetGene(PropertyType.Max_Speed)).Value / 25;
+            Console.Write(Mass);
+            Console.Write(":");
+            Console.Write(Max_Speed);
+            Console.WriteLine("");
         }
 
         public override void LoadContent(ContentManager content)

@@ -90,7 +90,7 @@ namespace Evolution.Creature
 
         public void CreatePopulation(int populationSize)
         {
-            spawnPoint = new Vector2(Randomiser.nextInt(100, (int)gameRef.ScreenBounds.X - 200), Randomiser.nextInt(100, (int)gameRef.ScreenBounds.Y - 200));
+            spawnPoint = new Vector2(Randomiser.nextInt(100, (int)Game1.ScreenBounds.Width - 200), Randomiser.nextInt(100, (int)Game1.ScreenBounds.Height - 200));
             for (int i = 0; i < populationSize; i++)
             {
                 double angle = Randomiser.nextDouble() * Math.PI * 2;

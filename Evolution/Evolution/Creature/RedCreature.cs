@@ -23,7 +23,7 @@ namespace Evolution.Creature
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(Texture, Position, Color.White);
+            //spriteBatch.Draw(Texture, Position, Color.White);
             base.Draw(spriteBatch, gameTime);
         }
     }

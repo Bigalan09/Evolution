@@ -21,9 +21,9 @@ namespace Evolution
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        Vector2 screenBounds = Vector2.Zero;
+        static Rectangle screenBounds = new Rectangle();
 
-        public Vector2 ScreenBounds
+        public static Rectangle ScreenBounds
         {
             get { return screenBounds; }
         }
@@ -43,7 +43,7 @@ namespace Evolution
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 100;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 100;
 
-            screenBounds = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             graphics.IsFullScreen = false;
 
             this.IsMouseVisible = true;
@@ -51,10 +51,10 @@ namespace Evolution
 
         protected override void Initialize()
         {
-            Randomiser.Instance(-1);
+            Randomiser.Instance(0);
 
             resourceManager = new ResourceManager(this);
-            resourceManager.addResource(Randomiser.nextInt(10, (int)screenBounds.X), Randomiser.nextInt(10, (int)screenBounds.Y));
+            resourceManager.addResource(Randomiser.nextInt(10, (int)screenBounds.Width), Randomiser.nextInt(10, (int)screenBounds.Height));
 
             redGroup = new CreatureGroup(CreatureType.Red, this);
             blackGroup = new CreatureGroup(CreatureType.Black, this);
