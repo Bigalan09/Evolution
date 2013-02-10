@@ -40,6 +40,20 @@ namespace Evolution.Resource
             resourcesToRemove.Add(resource);
         }
 
+        public void CreateResourceCluster(int amount)
+        {
+            Vector2 spawnPoint = new Vector2(Randomiser.nextInt((int)((Game1.ScreenBounds.Width - 20) / 2), (int)((Game1.ScreenBounds.Width + 20) / 2)), Randomiser.nextInt((int)((Game1.ScreenBounds.Height - 20) / 2), (int)((Game1.ScreenBounds.Height + 20) / 2)));
+
+            for (int i = 0; i < amount; i++)
+            {
+                double angle = Randomiser.nextDouble() * Math.PI * 2;
+                double radius = Math.Sqrt(Randomiser.nextDouble()) * 50;
+                float x = (float)(spawnPoint.X + radius * Math.Cos(angle));
+                float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
+                addResource(x, y);
+            }
+        }
+
         public void LoadContent(ContentManager content)
         {
             foreach (Resource res in resources)

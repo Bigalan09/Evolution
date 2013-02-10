@@ -40,21 +40,21 @@ namespace Evolution
             Content.RootDirectory = "Content";
 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 100;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 100;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            Randomiser.Instance(0);
+            Randomiser.Instance(-1);
 
             resourceManager = new ResourceManager(this);
-            resourceManager.addResource(Randomiser.nextInt(10, (int)screenBounds.Width), Randomiser.nextInt(10, (int)screenBounds.Height));
+            resourceManager.CreateResourceCluster(10);
 
             redGroup = new CreatureGroup(CreatureType.Red, this);
             blackGroup = new CreatureGroup(CreatureType.Black, this);
@@ -81,6 +81,9 @@ namespace Evolution
 
         protected override void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
+
             redGroup.Update(gameTime);
             blackGroup.Update(gameTime);
             resourceManager.Update(gameTime);
@@ -89,12 +92,13 @@ namespace Evolution
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.OliveDrab);
+            GraphicsDevice.Clear(Color.Olive);
 
             spriteBatch.Begin();
+            resourceManager.Draw(spriteBatch, gameTime);
+
             redGroup.Draw(spriteBatch, gameTime);
             blackGroup.Draw(spriteBatch, gameTime);
-            resourceManager.Draw(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

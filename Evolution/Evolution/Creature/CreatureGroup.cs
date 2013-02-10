@@ -23,12 +23,17 @@ namespace Evolution.Creature
         private List<Creature> creaturesToRemove = new List<Creature>();
         private CreatureType type;
         private Game1 gameRef;
-        private Vector2 spawnPoint; 
+        private Vector2 spawnPoint;
+
+        private static int next_id = 0;
+        private int id = 0;
 
         public CreatureGroup(CreatureType type, Game1 gameRef)
         {
             this.gameRef = gameRef;
             this.type = type;
+            this.id = next_id;
+            next_id++;
         }
 
         public void addCreature(float x, float y, Chromosome chromosome = null)
@@ -68,7 +73,10 @@ namespace Evolution.Creature
         {
             foreach (Creature c in creatures)
             {
-                c.Update(gameTime);
+                if (c.Dead)
+                    removeCreature(c);
+                else
+                    c.Update(gameTime);
             }
             creatures.AddRange(creaturesToAdd);
             creaturesToAdd.Clear();
@@ -90,7 +98,11 @@ namespace Evolution.Creature
 
         public void CreatePopulation(int populationSize)
         {
-            spawnPoint = new Vector2(Randomiser.nextInt(100, (int)Game1.ScreenBounds.Width - 200), Randomiser.nextInt(100, (int)Game1.ScreenBounds.Height - 200));
+            if (id > 0)
+                spawnPoint = new Vector2(Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Width - 200) / 2)), Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Height - 200) / 2)));
+            else
+                spawnPoint = new Vector2(Randomiser.nextInt((int)((Game1.ScreenBounds.Width - 200) / 2), (int)(Game1.ScreenBounds.Width - 200)), Randomiser.nextInt((int)((Game1.ScreenBounds.Height - 200) / 2), (int)(Game1.ScreenBounds.Height - 200)));
+
             for (int i = 0; i < populationSize; i++)
             {
                 double angle = Randomiser.nextDouble() * Math.PI * 2;

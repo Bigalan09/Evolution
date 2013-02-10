@@ -15,8 +15,8 @@ namespace Evolution.Creature
         private float max_force;
         private float wanderAngle = 0;
         private float wanderJitter = 0.05f;
-        private float wanderDistance = 50f;
-        private float wanderRadius = 50f;
+        private float wanderDistance = 10f;
+        private float wanderRadius = 20f;
         private float rotation = 0.0f;
 
         private Vector2 Velocity = Vector2.Zero;

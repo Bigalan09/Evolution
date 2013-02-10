@@ -13,7 +13,7 @@ namespace Evolution.Genetics
         private const int maxValue = 100;
 
         private PropertyType type;
-        private int value = 0;      
+        private float value = 0;      
         private string binaryString = "";
 
         public PropertyType Type
@@ -21,7 +21,7 @@ namespace Evolution.Genetics
             get { return type; }
         }
 
-        public int Value
+        public float Value
         {
             get { return this.value; }
         }
@@ -47,7 +47,7 @@ namespace Evolution.Genetics
 
         public void Mutate() {
             this.value = Randomiser.nextInt() % maxValue;
-            this.binaryString = IntToBinary(this.value);
+            this.binaryString = IntToBinary((int)this.value);
         }
 
         private string IntToBinary(int n)

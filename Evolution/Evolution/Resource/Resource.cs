@@ -35,7 +35,7 @@ namespace Evolution.Resource
 
         private void Initialiser()
         {
-            duration = (float)Randomiser.nextInt(10, 20);
+            duration = (float)Randomiser.nextInt(15, 20);
         }
 
         public override void LoadContent(ContentManager content)
@@ -51,7 +51,7 @@ namespace Evolution.Resource
             if (currentTime >= duration)
             {
                 currentTime -= duration;
-                if (Randomiser.nextDouble() < 0.3)
+                if (Randomiser.nextDouble() < 0.25)
                 {
                     resManager.addResource(this);
                 }

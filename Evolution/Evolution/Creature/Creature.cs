@@ -19,6 +19,15 @@ namespace Evolution.Creature
             set { chromosome = value; SetProperties(); }
         }
 
+        private bool dead = false;
+
+        public bool Dead
+        {
+            get { return dead; }
+        }
+        private float energy = 100f;
+        private float health = 100f;
+
         public Creature(float x, float y, Chromosome chromo = null)
             : base(x, y)
         {
@@ -35,13 +44,9 @@ namespace Evolution.Creature
 
         private void SetProperties()
         {
-            this.Mass = ((Gene)chromosome.GetGene(PropertyType.Body_Mass)).Value / 25;
-            this.Max_Force = 0.001f;
-            this.Max_Speed = ((Gene)chromosome.GetGene(PropertyType.Max_Speed)).Value / 25;
-            Console.Write(Mass);
-            Console.Write(":");
-            Console.Write(Max_Speed);
-            Console.WriteLine("");
+            this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value;
+            this.Max_Force = (chromosome.GetGene(PropertyType.Max_Speed).Value / 1000);
+            this.Max_Speed = (chromosome.GetGene(PropertyType.Max_Speed).Value / 100) + 0.1f;
         }
 
         public override void LoadContent(ContentManager content)
@@ -51,6 +56,17 @@ namespace Evolution.Creature
 
         public override void Update(GameTime gameTime)
         {
+            energy -= Max_Speed / 10;
+            if (energy <= 0)
+            {
+                Max_Speed -= (Max_Speed / 1000);
+                if (Max_Speed < 0.1)
+                    Max_Speed = 0.1f;
+                health -= 0.01f;
+            }
+            if (health <= 0)
+                dead = true;
+
             base.Update(gameTime);
         }
 
