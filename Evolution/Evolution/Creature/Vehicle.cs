@@ -19,7 +19,13 @@ namespace Evolution.Creature
         private float wanderRadius = 20f;
         private float rotation = 0.0f;
 
-        private Vector2 Velocity = Vector2.Zero;
+        private Vector2 velocity = Vector2.Zero;
+
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+            set { velocity = value; }
+        }
         private Vector2 to = new Vector2();
         private Vector2 Heading = new Vector2();
         private Vector2 Side = new Vector2();

@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
 using Evolution.Genetics;
 using Evolution.Creature;
-using Evolution.Resource;
+using Evolution.Resources;
 using Evolution.Utils;
 
 namespace Evolution
@@ -58,8 +58,8 @@ namespace Evolution
             resourceManager = new ResourceManager(this);
             resourceManager.CreateResourceCluster(10);
 
-            redGroup = new CreatureGroup(CreatureType.Red, this);
-            blackGroup = new CreatureGroup(CreatureType.Black, this);
+            redGroup = new CreatureGroup(CreatureType.Red, this, resourceManager);
+            blackGroup = new CreatureGroup(CreatureType.Black, this, resourceManager);
 
             redGroup.CreatePopulation(20);
             blackGroup.CreatePopulation(20);
@@ -86,6 +86,11 @@ namespace Evolution
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                resourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+            }
 
             redGroup.Update(gameTime);
             blackGroup.Update(gameTime);

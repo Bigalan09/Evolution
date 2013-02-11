@@ -1,4 +1,5 @@
 ﻿using Evolution.Genetics;
+using Evolution.Resources;
 using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -88,6 +89,7 @@ namespace Evolution.Creature
             }
 
             energy -= Max_Speed / 100;
+            Max_Speed = (float)(energy / 100);
             if (energy <= 0)
             {
                 Max_Speed -= (Max_Speed / 1000);
@@ -102,6 +104,19 @@ namespace Evolution.Creature
                 canReproduce = true;
             else
                 canReproduce = false;
+
+            
+            if (group.ResourceManager.InRadius(5, Position).Count > 0)
+            {
+                Resource res = group.ResourceManager.InRadius(5, Position)[0];
+                // Change State
+                while (energy < 100)
+                {
+                    this.Velocity = Vector2.Zero;
+                    res.Amount -= 0.1f;
+                    energy += 0.1f;
+                }
+            }
 
             if (canReproduce)
             {

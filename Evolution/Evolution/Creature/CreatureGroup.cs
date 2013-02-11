@@ -1,4 +1,5 @@
 ﻿using Evolution.Genetics;
+using Evolution.Resources;
 using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -35,6 +36,12 @@ namespace Evolution.Creature
         private int id = 0;
 
         private int generation = 0;
+        private ResourceManager resourceManager;
+
+        internal ResourceManager ResourceManager
+        {
+            get { return resourceManager; }
+        }
 
         public int Generation
         {
@@ -42,8 +49,9 @@ namespace Evolution.Creature
             set { generation = value; }
         }
 
-        public CreatureGroup(CreatureType type, Game1 gameRef)
+        public CreatureGroup(CreatureType type, Game1 gameRef, ResourceManager resManager)
         {
+            this.resourceManager = resManager;
             this.gameRef = gameRef;
             this.type = type;
             this.id = next_id;
