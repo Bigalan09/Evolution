@@ -11,8 +11,8 @@ namespace Evolution.Creature
 {
     class BlackCreature : Creature
     {
-        public BlackCreature(float x, float y, Chromosome chromo = null)
-            : base(x, y)
+        public BlackCreature(CreatureGroup group, float x, float y, Chromosome chromo = null)
+            : base(group, x, y)
         {
         }
 

@@ -40,11 +40,11 @@ namespace Evolution
             Content.RootDirectory = "Content";
 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = 450;// GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = 400;// GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
@@ -59,8 +59,8 @@ namespace Evolution
             redGroup = new CreatureGroup(CreatureType.Red, this);
             blackGroup = new CreatureGroup(CreatureType.Black, this);
 
-            redGroup.CreatePopulation(10);
-            blackGroup.CreatePopulation(10);
+            redGroup.CreatePopulation(5);
+            blackGroup.CreatePopulation(5);
 
             base.Initialize();
         }

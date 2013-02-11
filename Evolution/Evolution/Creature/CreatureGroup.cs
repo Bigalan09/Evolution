@@ -39,9 +39,9 @@ namespace Evolution.Creature
         public void addCreature(float x, float y, Chromosome chromosome = null)
         {
             if (type == CreatureType.Black)
-                creaturesToAdd.Add(new BlackCreature(x, y, chromosome));
+                creaturesToAdd.Add(new BlackCreature(this, x, y, chromosome));
             else
-                creaturesToAdd.Add(new RedCreature(x, y, chromosome));
+                creaturesToAdd.Add(new RedCreature(this, x, y, chromosome));
 
             foreach (Creature c in creaturesToAdd)
             {
@@ -96,12 +96,24 @@ namespace Evolution.Creature
             }
         }
 
+        public List<Creature> CreaturesInRadius(float radius, Vector2 position)
+        {
+            List<Creature> inRadius = new List<Creature>();
+            foreach (Creature c in creatures)
+            {
+
+                if ((c.Position + c.Origin - position).Length() <= radius)
+                    inRadius.Add(c);
+            }
+            return inRadius;
+        }
+
         public void CreatePopulation(int populationSize)
         {
             if (id > 0)
-                spawnPoint = new Vector2(Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Width - 200) / 2)), Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Height - 200) / 2)));
+                spawnPoint = new Vector2(Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Width - 20) / 2)), Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Height - 20) / 2)));
             else
-                spawnPoint = new Vector2(Randomiser.nextInt((int)((Game1.ScreenBounds.Width - 200) / 2), (int)(Game1.ScreenBounds.Width - 200)), Randomiser.nextInt((int)((Game1.ScreenBounds.Height - 200) / 2), (int)(Game1.ScreenBounds.Height - 200)));
+                spawnPoint = new Vector2(Randomiser.nextInt((int)((Game1.ScreenBounds.Width - 20) / 2), (int)(Game1.ScreenBounds.Width - 20)), Randomiser.nextInt((int)((Game1.ScreenBounds.Height - 20) / 2), (int)(Game1.ScreenBounds.Height - 20)));
 
             for (int i = 0; i < populationSize; i++)
             {

@@ -1,4 +1,5 @@
 ﻿using Evolution.Genetics;
+using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,11 +27,31 @@ namespace Evolution.Creature
             get { return dead; }
         }
         private float energy = 100f;
-        private float health = 100f;
 
-        public Creature(float x, float y, Chromosome chromo = null)
+        public float Energy
+        {
+            get { return energy; }
+            set { energy = value; }
+        }
+        private int age = 0;
+        private float health = 100f;
+        private CreatureGroup group;
+        private bool canReproduce = false;
+        private float currentTime = 0f;
+        private float duration = 5f;
+        private float coolDown = 0f;
+
+        public bool CanReproduce
+        {
+            get { return canReproduce; }
+            set { canReproduce = value; }
+        }
+
+        public Creature(CreatureGroup group, float x, float y, Chromosome chromo = null)
             : base(x, y)
         {
+            this.group = group;
+
             if (chromo != null)
             {
                 chromosome = chromo;
@@ -56,7 +77,17 @@ namespace Evolution.Creature
 
         public override void Update(GameTime gameTime)
         {
-            energy -= Max_Speed / 10;
+            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (currentTime >= duration)
+            {
+                currentTime -= duration;
+                age++;
+                if (coolDown > 0)
+                    coolDown--;
+            }
+
+            energy -= Max_Speed / 100;
             if (energy <= 0)
             {
                 Max_Speed -= (Max_Speed / 1000);
@@ -66,6 +97,37 @@ namespace Evolution.Creature
             }
             if (health <= 0)
                 dead = true;
+
+            if (energy > 50 && age >= 5 && coolDown <= 0)
+                canReproduce = true;
+            else
+                canReproduce = false;
+
+            if (canReproduce)
+            {
+                if (group.CreaturesInRadius(6, Position).Count > 0)
+                {
+                    Creature c = group.CreaturesInRadius(6, Position)[0];
+                    if (c.CanReproduce)
+                    {
+                        if (Randomiser.nextDouble() < 0.69) // Reproduction rate
+                        {
+                            List<Chromosome> children = chromosome.Reproduce(c.chromosome);
+                            if (Randomiser.nextDouble() < 0.33) // Mutation rate
+                            {
+                                children[0].Mutate();
+                                children[1].Mutate();
+                            }
+                            group.addCreature(Position.X, Position.Y, children[0]);
+                            c.Energy -= 20;
+                            energy -= 20;
+                            coolDown = 5f;
+                            if (Randomiser.nextDouble() < 0.5)
+                                group.addCreature(Position.X, Position.Y, children[1]);
+                        }
+                    }
+                }
+            }
 
             base.Update(gameTime);
         }
