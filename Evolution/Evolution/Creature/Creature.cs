@@ -38,7 +38,7 @@ namespace Evolution.Creature
         private CreatureGroup group;
         private bool canReproduce = false;
         private float currentTime = 0f;
-        private float duration = 5f;
+        private float duration = 8f;
         private float coolDown = 0f;
 
         public bool CanReproduce
@@ -95,10 +95,10 @@ namespace Evolution.Creature
                     Max_Speed = 0.1f;
                 health -= 0.01f;
             }
-            if (health <= 0)
+            if (health <= 0 || age > 75)
                 dead = true;
 
-            if (energy > 50 && age >= 5 && coolDown <= 0)
+            if (energy > 50 && age >= 8 && coolDown <= 0)
                 canReproduce = true;
             else
                 canReproduce = false;
@@ -113,7 +113,7 @@ namespace Evolution.Creature
                         if (Randomiser.nextDouble() < 0.69) // Reproduction rate
                         {
                             List<Chromosome> children = chromosome.Reproduce(c.chromosome);
-                            if (Randomiser.nextDouble() < 0.33) // Mutation rate
+                            if (Randomiser.nextDouble() < 0.13) // Mutation rate
                             {
                                 children[0].Mutate();
                                 children[1].Mutate();
@@ -121,9 +121,10 @@ namespace Evolution.Creature
                             group.addCreature(Position.X, Position.Y, children[0]);
                             c.Energy -= 20;
                             energy -= 20;
-                            coolDown = 5f;
+                            coolDown = 10f;
                             if (Randomiser.nextDouble() < 0.5)
                                 group.addCreature(Position.X, Position.Y, children[1]);
+                            group.IncreaseGeneration();
                         }
                     }
                 }

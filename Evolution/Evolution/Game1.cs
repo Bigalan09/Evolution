@@ -34,17 +34,19 @@ namespace Evolution
         ResourceManager resourceManager;
         CreatureGroup redGroup;
         CreatureGroup blackGroup;
+        private SpriteFont font;
+        private int generation = 0;
 
         public Game1()
         {
             Content.RootDirectory = "Content";
 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 450;// GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            graphics.PreferredBackBufferHeight = 400;// GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
@@ -59,8 +61,8 @@ namespace Evolution
             redGroup = new CreatureGroup(CreatureType.Red, this);
             blackGroup = new CreatureGroup(CreatureType.Black, this);
 
-            redGroup.CreatePopulation(5);
-            blackGroup.CreatePopulation(5);
+            redGroup.CreatePopulation(20);
+            blackGroup.CreatePopulation(20);
 
             base.Initialize();
         }
@@ -68,6 +70,7 @@ namespace Evolution
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("arial");
             resourceManager.LoadContent(Content);
 
             redGroup.LoadContent(Content);
@@ -87,18 +90,23 @@ namespace Evolution
             redGroup.Update(gameTime);
             blackGroup.Update(gameTime);
             resourceManager.Update(gameTime);
+
+            generation = (redGroup.Generation > blackGroup.Generation) ? redGroup.Generation : blackGroup.Generation;
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Olive);
+            GraphicsDevice.Clear(Color.ForestGreen);
 
             spriteBatch.Begin();
             resourceManager.Draw(spriteBatch, gameTime);
 
             redGroup.Draw(spriteBatch, gameTime);
             blackGroup.Draw(spriteBatch, gameTime);
+            spriteBatch.DrawString(font, "Red: " + redGroup.Count, new Vector2(10, 5), Color.White);
+            spriteBatch.DrawString(font, "Black: " + blackGroup.Count, new Vector2(10, 30), Color.White);
+            spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 55), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

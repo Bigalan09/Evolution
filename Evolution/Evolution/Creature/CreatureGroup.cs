@@ -19,6 +19,12 @@ namespace Evolution.Creature
     class CreatureGroup
     {
         private List<Creature> creatures = new List<Creature>();
+
+        public int Count
+        {
+            get { return creatures.Count; }
+        }
+
         private List<Creature> creaturesToAdd = new List<Creature>();
         private List<Creature> creaturesToRemove = new List<Creature>();
         private CreatureType type;
@@ -27,6 +33,14 @@ namespace Evolution.Creature
 
         private static int next_id = 0;
         private int id = 0;
+
+        private int generation = 0;
+
+        public int Generation
+        {
+            get { return generation; }
+            set { generation = value; }
+        }
 
         public CreatureGroup(CreatureType type, Game1 gameRef)
         {
@@ -123,6 +137,11 @@ namespace Evolution.Creature
                 float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
                 addCreature(x, y);
             }
+        }
+
+        internal void IncreaseGeneration()
+        {
+            generation++;
         }
     }
 }
