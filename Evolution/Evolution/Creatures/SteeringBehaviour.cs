@@ -50,7 +50,7 @@ namespace Evolution.Creatures
             float x = (float)Math.Cos(wanderAngle);
             float y = (float)Math.Sin(wanderAngle);
             Vector2 circleTarget = new Vector2(x, y) * wanderRadius;
-            return (circlePosition + circleTarget);
+            return circlePosition + circleTarget;
         }
 
         public static float RandomClamped()

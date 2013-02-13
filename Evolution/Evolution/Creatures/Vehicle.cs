@@ -24,6 +24,12 @@ namespace Evolution.Creatures
             set { velocity = value; }
         }
         private Vector2 to = new Vector2();
+
+        public Vector2 To
+        {
+            get { return to; }
+            set { to = value; }
+        }
         private Vector2 Heading = new Vector2();
         private Vector2 Side = new Vector2();
 
@@ -78,10 +84,11 @@ namespace Evolution.Creatures
         public override void Update(GameTime gameTime)
         {
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
+
+            if (!RotateToFacePosition())
+                return;
+
             fsm.Update(gameTime);
-
-            RotateToFacePosition();
-
             if (Velocity.LengthSquared() > 0.00000001)
             {
                 Heading = new Vector2((float)Math.Cos(rotation),

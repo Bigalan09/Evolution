@@ -39,7 +39,9 @@ namespace Evolution.FiniteStateMachine
         {
             Creature c = (Creature)ent;
 
-            Vector2 steering_direction = c.SteeringBehaviour.Seek(new Vector2(350, 300));
+            c.To = c.SteeringBehaviour.Wander();
+
+            Vector2 steering_direction = c.SteeringBehaviour.Seek(c.To);
             Vector2 steering_force = truncate(steering_direction, c.Max_Force);
             Vector2 acceleration = steering_force / c.Mass;
             c.Velocity = truncate(c.Velocity + acceleration, c.Max_Speed);
