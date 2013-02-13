@@ -10,13 +10,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
 using Evolution.Genetics;
-<<<<<<< HEAD
-using Evolution.Creatures;
-using Evolution.Resource;
-=======
-using Evolution.Creature;
 using Evolution.Resources;
->>>>>>> origin/master
+using Evolution.Creatures;
 using Evolution.Utils;
 
 namespace Evolution
