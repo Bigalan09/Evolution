@@ -72,11 +72,13 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Creature\BlackCreature.cs" />
-    <Compile Include="Creature\Creature.cs" />
-    <Compile Include="Creature\Entity.cs" />
-    <Compile Include="Creature\CreatureGroup.cs" />
-    <Compile Include="Creature\RedCreature.cs" />
+    <Compile Include="Creatures\BlackCreature.cs" />
+    <Compile Include="Creatures\Creature.cs" />
+    <Compile Include="Creatures\Entity.cs" />
+    <Compile Include="Creatures\CreatureGroup.cs" />
+    <Compile Include="Creatures\RedCreature.cs" />
+    <Compile Include="Creatures\SteeringBehaviour.cs" />
+    <Compile Include="FiniteStateMachine\Wander.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
     <Compile Include="Genetics\Gene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,8 +86,10 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Resource\Resource.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
+    <Compile Include="FiniteStateMachine\State.cs" />
+    <Compile Include="FiniteStateMachine\StateMachine.cs" />
     <Compile Include="Utils\Randomiser.cs" />
-    <Compile Include="Creature\Vehicle.cs" />
+    <Compile Include="Creatures\Vehicle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

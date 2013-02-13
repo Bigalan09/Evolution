@@ -1,4 +1,5 @@
-﻿using Evolution.Utils;
+﻿using Evolution.FiniteStateMachine;
+using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -6,23 +7,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Evolution.Creature
+namespace Evolution.Creatures
 {
     class Vehicle : Entity
     {
         private float mass;
         private float max_speed;
         private float max_force;
-        private float wanderAngle = 0;
-        private float wanderJitter = 0.05f;
-        private float wanderDistance = 10f;
-        private float wanderRadius = 20f;
         private float rotation = 0.0f;
 
-        private Vector2 Velocity = Vector2.Zero;
+        private Vector2 velocity = Vector2.Zero;
+
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+            set { velocity = value; }
+        }
         private Vector2 to = new Vector2();
         private Vector2 Heading = new Vector2();
         private Vector2 Side = new Vector2();
+
+        private SteeringBehaviour steeringBehaviour;
+        private Vector2 steering_force;
+
+        public Vector2 Steering_Force
+        {
+            get { return steering_force; }
+            set { steering_force = value; }
+        }
+
+        private StateMachine fsm = null;
+
+        public StateMachine FSM
+        {
+            get { return fsm; }
+        }
 
         public float Mass
         {
@@ -42,31 +61,26 @@ namespace Evolution.Creature
             set { max_speed = value; }
         }
 
+        public SteeringBehaviour SteeringBehaviour
+        {
+            get { return steeringBehaviour; }
+        }
+
         public Vehicle(float x, float y)
             : base(x, y)
         {
-            wanderAngle = (float)((RandomClamped() + 1.2) * 2f);
+            steeringBehaviour = new SteeringBehaviour(this);
+            steering_force = Vector2.Zero;
+            fsm = new StateMachine(this);
+            fsm.ChangeState(Wander.Instance());
         }
 
         public override void Update(GameTime gameTime)
         {
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
-            wanderAngle += RandomClamped() * wanderJitter;
+            fsm.Update(gameTime);
 
-            Vector2 circlePosition = Position + (Velocity * wanderDistance);
-            float x = (float)Math.Cos(wanderAngle);
-            float y = (float)Math.Sin(wanderAngle);
-            Vector2 circleTarget = new Vector2(x, y) * wanderRadius;
-            to = circlePosition + circleTarget;
-
-            if (!RotateToFacePosition())
-                return;
-
-            Vector2 steering_direction = Seek(to);
-            Vector2 steering_force = truncate(steering_direction, max_force);
-            Vector2 acceleration = steering_force / mass;
-            Velocity = truncate(Velocity + acceleration, max_speed);
-            Position = Position + Velocity;
+            RotateToFacePosition();
 
             if (Velocity.LengthSquared() > 0.00000001)
             {
@@ -94,18 +108,6 @@ namespace Evolution.Creature
             }
 
             return true;
-        }
-
-        public Vector2 Seek(Vector2 targetPos)
-        {
-            Vector2 DesiredVel = Vector2.Normalize(targetPos - Position) * Max_Speed;
-
-            return (DesiredVel - Velocity);
-        }
-
-        public static float RandomClamped()
-        {
-            return (float)(Randomiser.nextDouble() - Randomiser.nextDouble());
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -137,14 +139,6 @@ namespace Evolution.Creature
                 y = 0 - Texture.Height;
             }
             Position = new Vector2(x, y);
-        }
-
-        private Vector2 truncate(Vector2 v, float max_value)
-        {
-            float s = 0f;
-            s = max_value / v.Length();
-            s = (s < 1.0f) ? 1.0f : s;
-            return new Vector2(v.X * s, v.Y * s);
         }
     }
 }

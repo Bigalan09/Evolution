@@ -6,16 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Evolution.Creature
+namespace Evolution.Creatures
 {
     abstract class Entity
     {
-
         private Texture2D texture;
         private Rectangle bounds = new Rectangle();
         private Vector2 position = new Vector2();
         private Vector2 origin = new Vector2();
-
+        
         public Texture2D Texture
         {
             get { return texture; }
@@ -48,6 +47,7 @@ namespace Evolution.Creature
         public Entity(float x, float y)
         {
             position = new Vector2(x, y);
+            
         }
 
         public virtual void LoadContent(ContentManager content)

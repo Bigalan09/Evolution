@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
 using Evolution.Genetics;
-using Evolution.Creature;
+using Evolution.Creatures;
 using Evolution.Resource;
 using Evolution.Utils;
 
@@ -44,7 +44,7 @@ namespace Evolution
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }

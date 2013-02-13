@@ -1,4 +1,4 @@
-﻿using Evolution.Creature;
+﻿using Evolution.Creatures;
 using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;

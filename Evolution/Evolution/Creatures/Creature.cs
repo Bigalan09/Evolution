@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Evolution.Creature
+namespace Evolution.Creatures
 {
     class Creature : Vehicle
     {
@@ -44,9 +44,9 @@ namespace Evolution.Creature
 
         private void SetProperties()
         {
-            this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value;
-            this.Max_Force = (chromosome.GetGene(PropertyType.Max_Speed).Value / 1000);
-            this.Max_Speed = (chromosome.GetGene(PropertyType.Max_Speed).Value / 100) + 0.1f;
+            this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value * 2;
+            this.Max_Force = 1;
+            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 5;
         }
 
         public override void LoadContent(ContentManager content)

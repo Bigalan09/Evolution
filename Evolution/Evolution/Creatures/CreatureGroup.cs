@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Evolution.Creature
+namespace Evolution.Creatures
 {
     public enum CreatureType
     {
