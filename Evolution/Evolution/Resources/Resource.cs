@@ -8,14 +8,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Evolution.Resource
+namespace Evolution.Resources
 {
     class Resource : Entity
     {
         private float duration = 10.0f;
         private float currentTime = 0f;
         private int age = 0;
-        private float amount = 1f;
+        private float amount = 10f;
+
+        public float Amount
+        {
+            get { return amount; }
+            set { amount = value; }
+        }
         private ResourceManager resManager;
 
         public Resource(ResourceManager resManager, float x, float y)
@@ -55,7 +61,7 @@ namespace Evolution.Resource
                 {
                     resManager.addResource(this);
                 }
-                amount += 2.0f;
+                amount += 5.0f;
                 age++;
             }
 

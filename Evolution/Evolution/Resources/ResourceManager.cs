@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Evolution.Resource
+namespace Evolution.Resources
 {
     class ResourceManager
     {
@@ -52,6 +52,18 @@ namespace Evolution.Resource
                 float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
                 addResource(x, y);
             }
+        }
+
+        public List<Resource> InRadius(float radius, Vector2 position)
+        {
+            List<Resource> inRadius = new List<Resource>();
+            foreach (Resource r in resources)
+            {
+
+                if ((r.Position + r.Origin - position).Length() <= radius)
+                    inRadius.Add(r);
+            }
+            return inRadius;
         }
 
         public void LoadContent(ContentManager content)

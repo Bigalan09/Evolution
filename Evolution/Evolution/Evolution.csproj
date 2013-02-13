@@ -88,6 +88,8 @@
     <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="FiniteStateMachine\State.cs" />
     <Compile Include="FiniteStateMachine\StateMachine.cs" />
+    <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Utils\Randomiser.cs" />
     <Compile Include="Creatures\Vehicle.cs" />
   </ItemGroup>

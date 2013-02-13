@@ -10,8 +10,13 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using EvolutionLibrary;
 using Evolution.Genetics;
+<<<<<<< HEAD
 using Evolution.Creatures;
 using Evolution.Resource;
+=======
+using Evolution.Creature;
+using Evolution.Resources;
+>>>>>>> origin/master
 using Evolution.Utils;
 
 namespace Evolution
@@ -34,6 +39,8 @@ namespace Evolution
         ResourceManager resourceManager;
         CreatureGroup redGroup;
         CreatureGroup blackGroup;
+        private SpriteFont font;
+        private int generation = 0;
 
         public Game1()
         {
@@ -56,11 +63,11 @@ namespace Evolution
             resourceManager = new ResourceManager(this);
             resourceManager.CreateResourceCluster(10);
 
-            redGroup = new CreatureGroup(CreatureType.Red, this);
-            blackGroup = new CreatureGroup(CreatureType.Black, this);
+            redGroup = new CreatureGroup(CreatureType.Red, this, resourceManager);
+            blackGroup = new CreatureGroup(CreatureType.Black, this, resourceManager);
 
-            redGroup.CreatePopulation(10);
-            blackGroup.CreatePopulation(10);
+            redGroup.CreatePopulation(20);
+            blackGroup.CreatePopulation(20);
 
             base.Initialize();
         }
@@ -68,6 +75,7 @@ namespace Evolution
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("arial");
             resourceManager.LoadContent(Content);
 
             redGroup.LoadContent(Content);
@@ -84,21 +92,31 @@ namespace Evolution
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                resourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+            }
+
             redGroup.Update(gameTime);
             blackGroup.Update(gameTime);
             resourceManager.Update(gameTime);
+
+            generation = (redGroup.Generation > blackGroup.Generation) ? redGroup.Generation : blackGroup.Generation;
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Olive);
+            GraphicsDevice.Clear(Color.ForestGreen);
 
             spriteBatch.Begin();
             resourceManager.Draw(spriteBatch, gameTime);
 
             redGroup.Draw(spriteBatch, gameTime);
             blackGroup.Draw(spriteBatch, gameTime);
+            spriteBatch.DrawString(font, "Red: " + redGroup.Count, new Vector2(10, 5), Color.White);
+            spriteBatch.DrawString(font, "Black: " + blackGroup.Count, new Vector2(10, 30), Color.White);
+            spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 55), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
