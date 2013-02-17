@@ -78,6 +78,8 @@
     <Compile Include="Creatures\CreatureGroup.cs" />
     <Compile Include="Creatures\RedCreature.cs" />
     <Compile Include="Creatures\SteeringBehaviour.cs" />
+    <Compile Include="FiniteStateMachine\EatFood.cs" />
+    <Compile Include="FiniteStateMachine\FindFood.cs" />
     <Compile Include="FiniteStateMachine\Wander.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
     <Compile Include="Genetics\Gene.cs" />

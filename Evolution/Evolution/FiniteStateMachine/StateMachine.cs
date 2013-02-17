@@ -38,7 +38,7 @@ namespace Evolution.FiniteStateMachine
 
         public void Update(GameTime gameTime)
         {
-            if (currentState != null) currentState.Execute(owner);
+            if (currentState != null) currentState.Execute(owner, gameTime);
         }
 
         public void ChangeState(State newState)

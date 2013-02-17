@@ -37,10 +37,29 @@ namespace Evolution.Creatures
         private int age = 0;
         private float health = 100f;
         private CreatureGroup group;
+        private Resource memory = null;
+
+        internal Resource Memory
+        {
+            get { return memory; }
+            set { memory = value; }
+        }
+
+        internal CreatureGroup Group
+        {
+            get { return group; }
+        }
         private bool canReproduce = false;
         private float currentTime = 0f;
         private float duration = 8f;
         private float coolDown = 0f;
+        private int carrying = 0;
+
+        public int Carrying
+        {
+            get { return carrying; }
+            set { carrying = value; }
+        }
 
         public bool CanReproduce
         {
@@ -88,7 +107,6 @@ namespace Evolution.Creatures
                     coolDown--;
             }
 
-            energy -= Max_Speed / 100;
             Max_Speed = (float)(energy / 100);
             if (energy <= 0)
             {
@@ -104,19 +122,6 @@ namespace Evolution.Creatures
                 canReproduce = true;
             else
                 canReproduce = false;
-
-            
-            if (group.ResourceManager.InRadius(5, Position).Count > 0)
-            {
-                Resource res = group.ResourceManager.InRadius(5, Position)[0];
-                // Change State
-                while (energy < 100)
-                {
-                    this.Velocity = Vector2.Zero;
-                    res.Amount -= 0.1f;
-                    energy += 0.1f;
-                }
-            }
 
             if (canReproduce)
             {
