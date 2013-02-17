@@ -72,11 +72,12 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Creatures\BlackCreature.cs" />
+    <Compile Include="Creatures\Carnivore.cs" />
     <Compile Include="Creatures\Creature.cs" />
     <Compile Include="Creatures\Entity.cs" />
     <Compile Include="Creatures\CreatureGroup.cs" />
-    <Compile Include="Creatures\RedCreature.cs" />
+    <Compile Include="Creatures\Herbivore.cs" />
+    <Compile Include="Creatures\Omnivore.cs" />
     <Compile Include="Creatures\SteeringBehaviour.cs" />
     <Compile Include="FiniteStateMachine\EatFood.cs" />
     <Compile Include="FiniteStateMachine\FindFood.cs" />

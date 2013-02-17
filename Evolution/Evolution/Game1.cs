@@ -32,8 +32,10 @@ namespace Evolution
         SpriteBatch spriteBatch;
 
         ResourceManager resourceManager;
-        CreatureGroup redGroup;
-        CreatureGroup blackGroup;
+        CreatureGroup HerbivoreGroup;
+        CreatureGroup CarnivoreGroup;
+        CreatureGroup OmnivoreGroup;
+
         private SpriteFont font;
         private int generation = 0;
 
@@ -46,23 +48,25 @@ namespace Evolution
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            Randomiser.Instance(-1);
+            Randomiser.Instance(1);
 
             resourceManager = new ResourceManager(this);
             resourceManager.CreateResourceCluster(10);
 
-            redGroup = new CreatureGroup(CreatureType.Red, this, resourceManager);
-            blackGroup = new CreatureGroup(CreatureType.Black, this, resourceManager);
+            HerbivoreGroup = new CreatureGroup(CreatureType.Herbivore, this, resourceManager);
+            CarnivoreGroup = new CreatureGroup(CreatureType.Carnivore, this, resourceManager);
+            OmnivoreGroup = new CreatureGroup(CreatureType.Omnivore, this, resourceManager);
 
-            redGroup.CreatePopulation(20);
-            blackGroup.CreatePopulation(20);
+            HerbivoreGroup.CreatePopulation(20);
+            CarnivoreGroup.CreatePopulation(20);
+            OmnivoreGroup.CreatePopulation(20);
 
             base.Initialize();
         }
@@ -73,8 +77,9 @@ namespace Evolution
             font = Content.Load<SpriteFont>("arial");
             resourceManager.LoadContent(Content);
 
-            redGroup.LoadContent(Content);
-            blackGroup.LoadContent(Content);
+            HerbivoreGroup.LoadContent(Content);
+            CarnivoreGroup.LoadContent(Content);
+            OmnivoreGroup.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -92,11 +97,13 @@ namespace Evolution
                 resourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
             }
 
-            redGroup.Update(gameTime);
-            blackGroup.Update(gameTime);
+            HerbivoreGroup.Update(gameTime);
+            CarnivoreGroup.Update(gameTime);
+            OmnivoreGroup.Update(gameTime);
+
             resourceManager.Update(gameTime);
 
-            generation = (redGroup.Generation > blackGroup.Generation) ? redGroup.Generation : blackGroup.Generation;
+            generation = Math.Max(HerbivoreGroup.Generation, Math.Max(CarnivoreGroup.Generation, OmnivoreGroup.Generation));
             base.Update(gameTime);
         }
 
@@ -107,11 +114,13 @@ namespace Evolution
             spriteBatch.Begin();
             resourceManager.Draw(spriteBatch, gameTime);
 
-            redGroup.Draw(spriteBatch, gameTime);
-            blackGroup.Draw(spriteBatch, gameTime);
-            spriteBatch.DrawString(font, "Red: " + redGroup.Count, new Vector2(10, 5), Color.White);
-            spriteBatch.DrawString(font, "Black: " + blackGroup.Count, new Vector2(10, 30), Color.White);
-            spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 55), Color.White);
+            HerbivoreGroup.Draw(spriteBatch, gameTime);
+            CarnivoreGroup.Draw(spriteBatch, gameTime);
+            OmnivoreGroup.Draw(spriteBatch, gameTime);
+            spriteBatch.DrawString(font, "Herbivore: " + HerbivoreGroup.Count, new Vector2(10, 5), Color.White);
+            spriteBatch.DrawString(font, "Carnivore: " + CarnivoreGroup.Count, new Vector2(10, 30), Color.White);
+            spriteBatch.DrawString(font, "Omnivore: " + OmnivoreGroup.Count, new Vector2(10, 55), Color.White);
+            spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 80), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

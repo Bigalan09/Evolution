@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Evolution.Creatures
 {
-    class BlackCreature : Creature
+    class Carnivore : Creature
     {
-        public BlackCreature(CreatureGroup group, float x, float y, Chromosome chromo = null)
+        public Carnivore(CreatureGroup group, float x, float y, Chromosome chromo = null)
             : base(group, x, y)
         {
         }

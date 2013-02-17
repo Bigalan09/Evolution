@@ -13,8 +13,9 @@ namespace Evolution.Creatures
 {
     public enum CreatureType
     {
-        Black,
-        Red
+        Herbivore,
+        Carnivore,
+        Omnivore
     }
 
     class CreatureGroup
@@ -60,10 +61,12 @@ namespace Evolution.Creatures
 
         public void addCreature(float x, float y, Chromosome chromosome = null)
         {
-            if (type == CreatureType.Black)
-                creaturesToAdd.Add(new BlackCreature(this, x, y, chromosome));
+            if (type == CreatureType.Carnivore)
+                creaturesToAdd.Add(new Carnivore(this, x, y, chromosome));
+            else if (type == CreatureType.Herbivore)
+                creaturesToAdd.Add(new Herbivore(this, x, y, chromosome));
             else
-                creaturesToAdd.Add(new RedCreature(this, x, y, chromosome));
+                creaturesToAdd.Add(new Omnivore(this, x, y, chromosome));
 
             foreach (Creature c in creaturesToAdd)
             {
