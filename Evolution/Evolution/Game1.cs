@@ -31,13 +31,9 @@ namespace Evolution
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        ResourceManager resourceManager;
-        CreatureGroup HerbivoreGroup;
-        CreatureGroup CarnivoreGroup;
-        CreatureGroup OmnivoreGroup;
+        GameWorld world;
 
         private SpriteFont font;
-        private int generation = 0;
 
         public Game1()
         {
@@ -56,18 +52,8 @@ namespace Evolution
         protected override void Initialize()
         {
             Randomiser.Instance(1);
-
-            resourceManager = new ResourceManager(this);
-            resourceManager.CreateResourceCluster(10);
-
-            HerbivoreGroup = new CreatureGroup(CreatureType.Herbivore, this, resourceManager);
-            CarnivoreGroup = new CreatureGroup(CreatureType.Carnivore, this, resourceManager);
-            OmnivoreGroup = new CreatureGroup(CreatureType.Omnivore, this, resourceManager);
-
-            HerbivoreGroup.CreatePopulation(20);
-            CarnivoreGroup.CreatePopulation(20);
-            OmnivoreGroup.CreatePopulation(20);
-
+            world = new GameWorld(this);
+            world.Initialise();
             base.Initialize();
         }
 
@@ -75,11 +61,8 @@ namespace Evolution
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("arial");
-            resourceManager.LoadContent(Content);
-
-            HerbivoreGroup.LoadContent(Content);
-            CarnivoreGroup.LoadContent(Content);
-            OmnivoreGroup.LoadContent(Content);
+            
+            world.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -94,16 +77,10 @@ namespace Evolution
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                resourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+                world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
             }
+            world.Update(gameTime);
 
-            HerbivoreGroup.Update(gameTime);
-            CarnivoreGroup.Update(gameTime);
-            OmnivoreGroup.Update(gameTime);
-
-            resourceManager.Update(gameTime);
-
-            generation = Math.Max(HerbivoreGroup.Generation, Math.Max(CarnivoreGroup.Generation, OmnivoreGroup.Generation));
             base.Update(gameTime);
         }
 
@@ -112,15 +89,13 @@ namespace Evolution
             GraphicsDevice.Clear(Color.ForestGreen);
 
             spriteBatch.Begin();
-            resourceManager.Draw(spriteBatch, gameTime);
-
-            HerbivoreGroup.Draw(spriteBatch, gameTime);
-            CarnivoreGroup.Draw(spriteBatch, gameTime);
-            OmnivoreGroup.Draw(spriteBatch, gameTime);
+            world.Draw(spriteBatch, gameTime);
+            /*
             spriteBatch.DrawString(font, "Herbivore: " + HerbivoreGroup.Count, new Vector2(10, 5), Color.White);
             spriteBatch.DrawString(font, "Carnivore: " + CarnivoreGroup.Count, new Vector2(10, 30), Color.White);
             spriteBatch.DrawString(font, "Omnivore: " + OmnivoreGroup.Count, new Vector2(10, 55), Color.White);
             spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 80), Color.White);
+            */
             spriteBatch.End();
 
             base.Draw(gameTime);
