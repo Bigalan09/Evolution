@@ -32,6 +32,11 @@ namespace Evolution
             get { return entityManager; }
         }
 
+        public ResourceManager ResourceManager
+        {
+            get { return resourceManager; }
+        }
+
         public GameWorld(Game1 gameRef)
         {
             this.gameRef = gameRef;

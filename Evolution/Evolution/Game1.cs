@@ -44,7 +44,7 @@ namespace Evolution
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
@@ -74,6 +74,10 @@ namespace Evolution
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+
             world.Update(gameTime);
             base.Update(gameTime);
         }

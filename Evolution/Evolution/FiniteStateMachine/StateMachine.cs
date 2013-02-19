@@ -9,6 +9,7 @@ namespace Evolution.FiniteStateMachine
 {
     class StateMachine
     {
+        private State globalState = null;
         private State currentState = null;
         private State previousState = null;
         private Entity owner = null;
@@ -37,12 +38,12 @@ namespace Evolution.FiniteStateMachine
 
         public void Update(GameTime gameTime)
         {
+            if (globalState != null) globalState.Execute(owner, gameTime);
             if (currentState != null) currentState.Execute(owner, gameTime);
         }
 
         public void ChangeState(State newState)
         {
-            Console.WriteLine(owner);
             if (currentState != null)
             {
                 previousState = currentState;
@@ -50,6 +51,16 @@ namespace Evolution.FiniteStateMachine
             }
             currentState = newState;
             currentState.Enter(owner);
+        }
+
+        public void ChangeGlobalState(State newState)
+        {
+            if (globalState != null)
+            {
+                globalState.Exit(owner);
+            }
+            globalState = newState;
+            globalState.Enter(owner);
         }
 
         public void RevertToPreviousState()

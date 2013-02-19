@@ -126,14 +126,19 @@ namespace Evolution
 
         public List<Entity> InRadius(float radius, Vector2 position)
         {
+            return this.InRadius(radius, position, typeof(Entity));
+        }
+
+        public List<Entity> InRadius(float radius, Vector2 position, Type type)
+        {
             List<Entity> inRadius = new List<Entity>();
-            foreach (Entity ent in entities)
+            foreach (DictionaryEntry entry in entities)
             {
-                if ((ent.Position + ent.Origin - position).Length() <= radius)
+                Entity ent = ((Entity)(entry.Value));
+                if ((ent.Position + ent.Origin - position).Length() <= radius && ent.GetType().Equals(type))
                     inRadius.Add(ent);
             }
             return inRadius;
         }
-
     }
 }
