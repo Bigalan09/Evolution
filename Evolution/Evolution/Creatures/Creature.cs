@@ -20,9 +20,6 @@ namespace Evolution.Creatures
         private CreatureGroup group;
         private Resource memory = null;
         private bool canReproduce = false;
-        private float currentTime = 0f;
-        private float duration = 8f;
-        private float coolDown = 0f;
         private int carrying = 0;
 
         public Chromosome Chromosome
@@ -77,9 +74,9 @@ namespace Evolution.Creatures
 
         private void SetProperties()
         {
-            this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value * 2;
-            this.Max_Force = 1;
-            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 5;
+            this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value * 10;
+            this.Max_Force = .1f;
+            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 100;
         }
 
         public override void LoadContent(ContentManager content)
@@ -89,33 +86,6 @@ namespace Evolution.Creatures
 
         public override void Update(GameTime gameTime)
         {
-            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (currentTime >= duration)
-            {
-                currentTime -= duration;
-                age++;
-                if (coolDown > 0)
-                    coolDown--;
-            }
-
-            energy -= Max_Speed / 100;
-            Max_Speed = (float)(energy / 100);
-            if (energy <= 0)
-            {
-                Max_Speed -= (Max_Speed / 1000);
-                if (Max_Speed < 0.1)
-                    Max_Speed = 0.1f;
-                health -= 0.01f;
-            }
-            if (health <= 0 || age > 75)
-                Alive = false;
-
-            if (energy > 50 && age >= 8 && coolDown <= 0)
-                canReproduce = true;
-            else
-                canReproduce = false;
-
             base.Update(gameTime);
         }
 

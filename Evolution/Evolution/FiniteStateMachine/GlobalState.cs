@@ -1,36 +1,38 @@
-﻿using Evolution.Creatures;
-using Evolution.Resources;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Evolution.Creatures;
+using Evolution.Resources;
+using Microsoft.Xna.Framework;
+using Evolution.Utils;
 
 namespace Evolution.FiniteStateMachine
 {
-    class EatFood : State
+    class GlobalState : State
     {
-
-        public EatFood()
+        public GlobalState()
         {
+
         }
 
         public void Enter(Entity ent)
         {
             Creature c = (Creature)ent;
-            Console.WriteLine(c.ID + " Eatting!");
         }
 
         public void Execute(Entity ent, GameTime gameTime)
         {
-               Creature c = (Creature)ent;
-               c.Energy++;
+            Creature c = (Creature)ent;
+            if (!c.FSM.IsInState(typeof(EatFood)))
+            {
+                c.Energy -= 1;
+            }
         }
 
         public void Exit(Entity ent)
         {
             Creature c = (Creature)ent;
-
         }
 
     }

@@ -76,7 +76,8 @@ namespace Evolution.Creatures
             steeringBehaviour = new SteeringBehaviour(this);
             steering_force = Vector2.Zero;
             fsm = new StateMachine(this);
-            fsm.ChangeState(Wander.Instance());
+            fsm.ChangeState(new Wander());
+            fsm.ChangeGlobalState(new GlobalState());
         }
 
         public override void Update(GameTime gameTime)

@@ -81,7 +81,7 @@
     <Compile Include="Creatures\SteeringBehaviour.cs" />
     <Compile Include="EntityManager.cs" />
     <Compile Include="FiniteStateMachine\EatFood.cs" />
-    <Compile Include="FiniteStateMachine\FindFood.cs" />
+    <Compile Include="FiniteStateMachine\GlobalState.cs" />
     <Compile Include="FiniteStateMachine\Wander.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
@@ -95,6 +95,7 @@
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Utils\Randomiser.cs" />
     <Compile Include="Creatures\Vehicle.cs" />
+    <Compile Include="Utils\Regulator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

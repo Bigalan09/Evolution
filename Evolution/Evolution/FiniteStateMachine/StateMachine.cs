@@ -68,9 +68,9 @@ namespace Evolution.FiniteStateMachine
             ChangeState(previousState);
         }
 
-        public bool IsInState(State state)
+        public bool IsInState(Type state)
         {
-            if (currentState.GetType() == state.GetType()) return true;
+            if (currentState.GetType() == state) return true;
             return false;
         }
     }

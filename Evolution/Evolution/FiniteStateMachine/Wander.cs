@@ -10,25 +10,8 @@ namespace Evolution.FiniteStateMachine
 {
     class Wander : State
     {
-
-        private static State instance = null;
-        private static bool canCreate = false;
-
-        private Wander()
+        public Wander()
         {
-            if (!canCreate)
-                throw new NotImplementedException();
-        }
-
-        public static State Instance()
-        {
-            if (instance == null)
-            {
-                canCreate = true;
-                instance = new Wander();
-                canCreate = false;
-            }
-            return instance;
         }
 
         public void Enter(Entity ent)
@@ -47,6 +30,30 @@ namespace Evolution.FiniteStateMachine
             Vector2 acceleration = steering_force / c.Mass;
             c.Velocity = truncate(c.Velocity + acceleration, c.Max_Speed);
             c.Position = c.Position + c.Velocity;
+
+
+            if (c.Energy <= 90 && !c.FSM.IsInState(typeof(EatFood)))
+            {
+                if (c is Herbivore)
+                {
+                    if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)).Count > 0)
+                    {
+                        c.FSM.ChangeState(new EatFood());
+                    }
+                } else if (c is Carnivore)
+                {
+                    if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore)).Count > 0 || c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Omnivore)).Count > 0)
+                    {
+                        c.FSM.ChangeState(new EatFood());
+                    }
+                } else if (c is Omnivore)
+                {
+                    if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore)).Count > 0 || c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Carnivore)).Count > 0 || c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)).Count > 0)
+                    {
+                        c.FSM.ChangeState(new EatFood());
+                    }
+                }
+            }
         }
 
         public void Exit(Entity ent)

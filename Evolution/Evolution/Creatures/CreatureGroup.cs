@@ -36,6 +36,11 @@ namespace Evolution.Creatures
         private int generation = 0;
         private GameWorld gameWorld;
 
+        internal GameWorld GameWorld
+        {
+            get { return gameWorld; }
+        }
+
         public int Generation
         {
             get { return generation; }
