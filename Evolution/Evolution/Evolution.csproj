@@ -79,6 +79,7 @@
     <Compile Include="Creatures\Herbivore.cs" />
     <Compile Include="Creatures\Omnivore.cs" />
     <Compile Include="Creatures\SteeringBehaviour.cs" />
+    <Compile Include="EntityManager.cs" />
     <Compile Include="FiniteStateMachine\EatFood.cs" />
     <Compile Include="FiniteStateMachine\FindFood.cs" />
     <Compile Include="FiniteStateMachine\Wander.cs" />

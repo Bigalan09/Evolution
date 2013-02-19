@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,58 +17,60 @@ namespace Evolution
         private CreatureGroup HerbivoreGroup;
         private CreatureGroup CarnivoreGroup;
         private CreatureGroup OmnivoreGroup;
+
+        private EntityManager entityManager;
         private Game1 gameRef;
 
-        public ResourceManager ResourceManager
+        public Game1 GameRef
         {
-            get { return resourceManager; }
+            get { return gameRef; }
+            set { gameRef = value; }
+        }
+
+        public EntityManager EntityManager
+        {
+            get { return entityManager; }
         }
 
         public GameWorld(Game1 gameRef)
         {
             this.gameRef = gameRef;
-        }
+            entityManager = new EntityManager(this);
 
-        public void Initialise()
-        {
-            resourceManager = new ResourceManager(gameRef);
+            resourceManager = new ResourceManager(this);
+            HerbivoreGroup = new CreatureGroup(CreatureType.Herbivore, this);
+            CarnivoreGroup = new CreatureGroup(CreatureType.Carnivore, this);
+            OmnivoreGroup = new CreatureGroup(CreatureType.Omnivore, this);
+
+            // Create entities
             resourceManager.CreateResourceCluster(5, 50, new Vector2(150, 150));
             resourceManager.CreateResourceCluster(5, 50, new Vector2(Game1.ScreenBounds.Width - 150, 150));
             resourceManager.CreateResourceCluster(5, 50, new Vector2(150, Game1.ScreenBounds.Height - 150));
             resourceManager.CreateResourceCluster(5, 50, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
 
-            HerbivoreGroup = new CreatureGroup(CreatureType.Herbivore, gameRef, resourceManager);
-            CarnivoreGroup = new CreatureGroup(CreatureType.Carnivore, gameRef, resourceManager);
-            OmnivoreGroup = new CreatureGroup(CreatureType.Omnivore, gameRef, resourceManager);
-
-            HerbivoreGroup.CreatePopulation(105);
+            HerbivoreGroup.CreatePopulation(15);
             CarnivoreGroup.CreatePopulation(15);
             OmnivoreGroup.CreatePopulation(15);
+
+            entityManager.LoadContent(gameRef.Content);
+
         }
 
         public void LoadContent(ContentManager content)
         {
-            HerbivoreGroup.LoadContent(content);
-            CarnivoreGroup.LoadContent(content);
-            OmnivoreGroup.LoadContent(content);
+            entityManager.LoadContent(content);
         }
 
         public void Update(GameTime gameTime)
         {
-            resourceManager.Update(gameTime);
-
-            HerbivoreGroup.Update(gameTime);
-            CarnivoreGroup.Update(gameTime);
-            OmnivoreGroup.Update(gameTime);
+            entityManager.Update(gameTime);
+            entityManager.AddEntities();
+            entityManager.RemoveEntities();
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            resourceManager.Draw(spriteBatch, gameTime);
-
-            HerbivoreGroup.Draw(spriteBatch, gameTime);
-            CarnivoreGroup.Draw(spriteBatch, gameTime);
-            OmnivoreGroup.Draw(spriteBatch, gameTime);
+            entityManager.Draw(spriteBatch, gameTime);
         }
 
     }

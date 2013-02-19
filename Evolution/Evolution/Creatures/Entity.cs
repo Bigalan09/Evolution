@@ -10,10 +10,20 @@ namespace Evolution.Creatures
 {
     abstract class Entity
     {
+        private static int next_id = 0;
+        private string id = "entity";
+
         private Texture2D texture;
         private Rectangle bounds = new Rectangle();
         private Vector2 position = new Vector2();
         private Vector2 origin = new Vector2();
+        private bool alive = true;
+
+        public bool Alive
+        {
+            get { return alive; }
+            set { alive = value; }
+        }
         
         public Texture2D Texture
         {
@@ -44,10 +54,16 @@ namespace Evolution.Creatures
             set { origin = value; }
         }
 
+        public string ID
+        {
+            get { return this.id; }
+        }
+
         public Entity(float x, float y)
         {
             position = new Vector2(x, y);
-            
+            this.id += next_id.ToString();
+            next_id++;
         }
 
         public virtual void LoadContent(ContentManager content)

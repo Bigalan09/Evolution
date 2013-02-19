@@ -44,7 +44,7 @@ namespace Evolution
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
@@ -53,7 +53,7 @@ namespace Evolution
         {
             Randomiser.Instance(-1);
             world = new GameWorld(this);
-            world.Initialise();
+
             base.Initialize();
         }
 
@@ -74,13 +74,7 @@ namespace Evolution
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-                world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
-            }
             world.Update(gameTime);
-
             base.Update(gameTime);
         }
 
@@ -90,12 +84,10 @@ namespace Evolution
 
             spriteBatch.Begin();
             world.Draw(spriteBatch, gameTime);
-            /*
-            spriteBatch.DrawString(font, "Herbivore: " + HerbivoreGroup.Count, new Vector2(10, 5), Color.White);
-            spriteBatch.DrawString(font, "Carnivore: " + CarnivoreGroup.Count, new Vector2(10, 30), Color.White);
-            spriteBatch.DrawString(font, "Omnivore: " + OmnivoreGroup.Count, new Vector2(10, 55), Color.White);
-            spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 80), Color.White);
-            */
+            spriteBatch.DrawString(font, "Herbivore: " + world.EntityManager.GetAll(typeof(Herbivore)).Count, new Vector2(10, 5), Color.White);
+            spriteBatch.DrawString(font, "Carnivore: " + world.EntityManager.GetAll(typeof(Carnivore)).Count, new Vector2(10, 30), Color.White);
+            spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(10, 55), Color.White);
+            //spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 80), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -20,29 +20,21 @@ namespace Evolution.Creatures
 
     class CreatureGroup
     {
-        private List<Creature> creatures = new List<Creature>();
+        private List<Entity> creatures = new List<Entity>();
 
         public int Count
         {
             get { return creatures.Count; }
         }
 
-        private List<Creature> creaturesToAdd = new List<Creature>();
-        private List<Creature> creaturesToRemove = new List<Creature>();
         private CreatureType type;
-        private Game1 gameRef;
         private Vector2 spawnPoint;
 
         private static int next_id = 0;
         private int id = 0;
 
         private int generation = 0;
-        private ResourceManager resourceManager;
-
-        internal ResourceManager ResourceManager
-        {
-            get { return resourceManager; }
-        }
+        private GameWorld gameWorld;
 
         public int Generation
         {
@@ -50,10 +42,9 @@ namespace Evolution.Creatures
             set { generation = value; }
         }
 
-        public CreatureGroup(CreatureType type, Game1 gameRef, ResourceManager resManager)
+        public CreatureGroup(CreatureType type, GameWorld gameWorld)
         {
-            this.resourceManager = resManager;
-            this.gameRef = gameRef;
+            this.gameWorld = gameWorld;
             this.type = type;
             this.id = next_id;
             next_id++;
@@ -61,79 +52,34 @@ namespace Evolution.Creatures
 
         public void addCreature(float x, float y, Chromosome chromosome = null)
         {
+            Creature creature = null;
             if (type == CreatureType.Carnivore)
-                creaturesToAdd.Add(new Carnivore(this, x, y, chromosome));
+                creature = new Carnivore(this, x, y, chromosome);
             else if (type == CreatureType.Herbivore)
-                creaturesToAdd.Add(new Herbivore(this, x, y, chromosome));
+                creature = new Herbivore(this, x, y, chromosome);
             else
-                creaturesToAdd.Add(new Omnivore(this, x, y, chromosome));
+                creature = new Omnivore(this, x, y, chromosome);
 
-            foreach (Creature c in creaturesToAdd)
-            {
-                c.LoadContent(gameRef.Content);
-            }
+            creatures.Add(creature);
+            gameWorld.EntityManager.AddEntity(creature);
         }
 
         public void addCreature(Creature creature)
         {
             if (!creatures.Contains(creature))
-                creaturesToAdd.Add(creature);
+                creatures.Add(creature);
+            gameWorld.EntityManager.AddEntity(creature);
         }
 
         public void removeCreature(Creature creature)
         {
             if (creatures.Contains(creature))
-                creaturesToRemove.Add(creature);
+                creatures.Remove(creature);
+
+            gameWorld.EntityManager.RemoveEntity(creature);
         }
 
-        public void LoadContent(ContentManager content)
-        {
-            foreach (Creature c in creatures)
-            {
-                c.LoadContent(content);
-            }
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            foreach (Creature c in creatures)
-            {
-                if (c.Dead)
-                    removeCreature(c);
-                else
-                    c.Update(gameTime);
-            }
-            creatures.AddRange(creaturesToAdd);
-            creaturesToAdd.Clear();
-
-            foreach (Creature c in creaturesToRemove)
-            {
-                creatures.Remove(c);
-            }
-            creaturesToRemove.Clear();
-        }
-
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            foreach (Creature c in creatures)
-            {
-                c.Draw(spriteBatch, gameTime);
-            }
-        }
-
-        public List<Creature> CreaturesInRadius(float radius, Vector2 position)
-        {
-            List<Creature> inRadius = new List<Creature>();
-            foreach (Creature c in creatures)
-            {
-
-                if ((c.Position + c.Origin - position).Length() <= radius)
-                    inRadius.Add(c);
-            }
-            return inRadius;
-        }
-
-        public void CreatePopulation(int populationSize)
+        public List<Entity> CreatePopulation(int populationSize)
         {
             if (id > 0)
                 spawnPoint = new Vector2(Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Width - 20) / 2)), Randomiser.nextInt(10, (int)((Game1.ScreenBounds.Height - 20) / 2)));
@@ -148,6 +94,8 @@ namespace Evolution.Creatures
                 float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
                 addCreature(x, y);
             }
+
+            return creatures;
         }
 
         internal void IncreaseGeneration()

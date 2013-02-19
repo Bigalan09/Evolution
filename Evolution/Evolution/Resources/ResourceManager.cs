@@ -1,4 +1,5 @@
-﻿using Evolution.Utils;
+﻿using Evolution.Creatures;
+using Evolution.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,36 +12,35 @@ namespace Evolution.Resources
 {
     class ResourceManager
     {
-        private List<Resource> resources = new List<Resource>();
-        private List<Resource> resourcesToAdd = new List<Resource>();
-        private List<Resource> resourcesToRemove = new List<Resource>();
-        private Game1 gameRef;
+        private List<Entity> resources = new List<Entity>();
+        private GameWorld gameWorld;
 
-        public ResourceManager(Game1 gameRef)
+        public ResourceManager(GameWorld gameWorld)
         {
-            this.gameRef = gameRef;
+            this.gameWorld = gameWorld;
         }
 
         public void addResource(float x, float y)
         {
-            resourcesToAdd.Add(new Resource(this, x, y));
-            foreach (Resource res in resourcesToAdd)
-            {
-                res.LoadContent(gameRef.Content);
-            }
+            Resource res = new Resource(this, x, y);
+            resources.Add(res);
+            gameWorld.EntityManager.AddEntity(res);
         }
 
         public void addResource(Resource resource)
         {
-            resourcesToAdd.Add(new Resource(this, resource.Position.X + Randomiser.nextInt(-10, 10), resource.Position.Y + Randomiser.nextInt(-10, 10), resource.Texture));
+            Resource res = new Resource(this, resource.Position.X + Randomiser.nextInt(-10, 10), resource.Position.Y + Randomiser.nextInt(-10, 10), resource.Texture);
+            resources.Add(res);
+            gameWorld.EntityManager.AddEntity(res);
         }
 
         public void removeResource(Resource resource)
         {
-            resourcesToRemove.Add(resource);
+            resources.Remove(resource);
+            gameWorld.EntityManager.RemoveEntity(resource);
         }
 
-        public void CreateResourceCluster(int amount, int rad, Vector2 point)
+        public List<Entity> CreateResourceCluster(int amount, int rad, Vector2 point)
         {
             Vector2 spawnPoint = point;//new Vector2(Randomiser.nextInt((int)((Game1.ScreenBounds.Width - 20) / 2), (int)((Game1.ScreenBounds.Width + 20) / 2)), Randomiser.nextInt((int)((Game1.ScreenBounds.Height - 20) / 2), (int)((Game1.ScreenBounds.Height + 20) / 2)));
 
@@ -52,18 +52,7 @@ namespace Evolution.Resources
                 float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
                 addResource(x, y);
             }
-        }
-
-        public List<Resource> InRadius(float radius, Vector2 position)
-        {
-            List<Resource> inRadius = new List<Resource>();
-            foreach (Resource r in resources)
-            {
-
-                if ((r.Position + r.Origin - position).Length() <= radius)
-                    inRadius.Add(r);
-            }
-            return inRadius;
+            return resources;
         }
 
         public void LoadContent(ContentManager content)
@@ -71,30 +60,6 @@ namespace Evolution.Resources
             foreach (Resource res in resources)
             {
                 res.LoadContent(content);
-            }
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            foreach (Resource res in resources)
-            {
-                res.Update(gameTime);
-            }
-            resources.AddRange(resourcesToAdd);
-            resourcesToAdd.Clear();
-
-            foreach (Resource res in resourcesToRemove)
-            {
-                resources.Remove(res);
-            }
-            resourcesToRemove.Clear();
-        }
-
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            foreach (Resource res in resources)
-            {
-                res.Draw(spriteBatch, gameTime);
             }
         }
     }

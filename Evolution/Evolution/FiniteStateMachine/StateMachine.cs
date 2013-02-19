@@ -33,7 +33,6 @@ namespace Evolution.FiniteStateMachine
         public StateMachine(Entity owner)
         {
             this.owner = owner;
-            Console.WriteLine(owner);
         }
 
         public void Update(GameTime gameTime)

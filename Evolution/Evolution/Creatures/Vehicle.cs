@@ -17,32 +17,30 @@ namespace Evolution.Creatures
         private float rotation = 0.0f;
 
         private Vector2 velocity = Vector2.Zero;
+        private Vector2 to = new Vector2();
+        private Vector2 Heading = new Vector2();
+        private Vector2 Side = new Vector2();
+        private SteeringBehaviour steeringBehaviour;
+        private Vector2 steering_force;
+        private StateMachine fsm = null;
 
         public Vector2 Velocity
         {
             get { return velocity; }
             set { velocity = value; }
         }
-        private Vector2 to = new Vector2();
 
         public Vector2 To
         {
             get { return to; }
             set { to = value; }
         }
-        private Vector2 Heading = new Vector2();
-        private Vector2 Side = new Vector2();
-
-        private SteeringBehaviour steeringBehaviour;
-        private Vector2 steering_force;
 
         public Vector2 Steering_Force
         {
             get { return steering_force; }
             set { steering_force = value; }
         }
-
-        private StateMachine fsm = null;
 
         public StateMachine FSM
         {

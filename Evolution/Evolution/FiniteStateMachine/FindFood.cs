@@ -39,28 +39,6 @@ namespace Evolution.FiniteStateMachine
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-
-            if (c.Carrying > 0)
-            {
-                c.Carrying--;
-                c.Energy++;
-            }
-            else
-            {
-                if (c.Group.ResourceManager.InRadius(5, c.Position).Count > 0)
-                {
-                    Resource res = c.Group.ResourceManager.InRadius(5, c.Position)[0];
-                    c.Memory = res;
-                    c.FSM.ChangeState(EatFood.Instance());
-
-                }
-                else if (c.Memory != null)
-                {
-                    c.To = c.Memory.Position;
-                    c.SteeringBehaviour.Seek(c.Memory.Position);
-                }
-                c.FSM.ChangeState(Wander.Instance());
-            }
         }
 
         public void Exit(Entity ent)
