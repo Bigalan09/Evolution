@@ -51,7 +51,7 @@ namespace Evolution
 
         protected override void Initialize()
         {
-            Randomiser.Instance(1);
+            Randomiser.Instance(-1);
             world = new GameWorld(this);
             world.Initialise();
             base.Initialize();

@@ -31,18 +31,18 @@ namespace Evolution
         public void Initialise()
         {
             resourceManager = new ResourceManager(gameRef);
-            resourceManager.CreateResourceCluster(10, 150, new Vector2(150, 150));
-            resourceManager.CreateResourceCluster(10, 150, new Vector2(Game1.ScreenBounds.Width - 150, 150));
-            resourceManager.CreateResourceCluster(10, 150, new Vector2(150, Game1.ScreenBounds.Height - 150));
-            resourceManager.CreateResourceCluster(10, 150, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
+            resourceManager.CreateResourceCluster(5, 50, new Vector2(150, 150));
+            resourceManager.CreateResourceCluster(5, 50, new Vector2(Game1.ScreenBounds.Width - 150, 150));
+            resourceManager.CreateResourceCluster(5, 50, new Vector2(150, Game1.ScreenBounds.Height - 150));
+            resourceManager.CreateResourceCluster(5, 50, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
 
             HerbivoreGroup = new CreatureGroup(CreatureType.Herbivore, gameRef, resourceManager);
             CarnivoreGroup = new CreatureGroup(CreatureType.Carnivore, gameRef, resourceManager);
             OmnivoreGroup = new CreatureGroup(CreatureType.Omnivore, gameRef, resourceManager);
 
-            HerbivoreGroup.CreatePopulation(5);
-            CarnivoreGroup.CreatePopulation(5);
-            OmnivoreGroup.CreatePopulation(5);
+            HerbivoreGroup.CreatePopulation(105);
+            CarnivoreGroup.CreatePopulation(15);
+            OmnivoreGroup.CreatePopulation(15);
         }
 
         public void LoadContent(ContentManager content)
