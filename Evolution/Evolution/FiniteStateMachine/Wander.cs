@@ -28,7 +28,7 @@ namespace Evolution.FiniteStateMachine
             Vector2 steering_direction = c.SteeringBehaviour.Seek(c.To);
             Vector2 steering_force = truncate(steering_direction, c.Max_Force);
             Vector2 acceleration = steering_force / c.Mass;
-            c.Velocity = truncate(c.Velocity + acceleration, c.Max_Speed);
+            c.Velocity = truncate(c.Velocity + acceleration, c.Speed);
             c.Position = c.Position + c.Velocity;
 
 

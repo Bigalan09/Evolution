@@ -12,9 +12,12 @@ namespace Evolution.Creatures
     class Vehicle : Entity
     {
         private float mass;
+        private float speed;
         private float max_speed;
         private float max_force;
         private float rotation = 0.0f;
+
+        private Rectangle rec = new Rectangle();
 
         private Vector2 velocity = Vector2.Zero;
         private Vector2 to = new Vector2();
@@ -58,11 +61,17 @@ namespace Evolution.Creatures
             get { return max_force; }
             set { max_force = value; }
         }
-        
+
         public float Max_Speed
         {
             get { return max_speed; }
             set { max_speed = value; }
+        }
+
+        public float Speed
+        {
+            get { return speed; }
+            set { speed = value; }
         }
 
         public SteeringBehaviour SteeringBehaviour
@@ -78,6 +87,7 @@ namespace Evolution.Creatures
             fsm = new StateMachine(this);
             fsm.ChangeState(new Wander());
             fsm.ChangeGlobalState(new GlobalState());
+
         }
 
         public override void Update(GameTime gameTime)
@@ -95,6 +105,8 @@ namespace Evolution.Creatures
                 Side = new Vector2(-Heading.Y, Heading.X);
             }
             Wrap();
+            speed = (Mass / 500) - max_speed;
+            rec = new Rectangle((int)Position.X, (int)Position.Y, (int)(Texture.Width - Mass / 50), (int)(Texture.Height - Mass / 50));
             base.Update(gameTime);
         }
 
@@ -118,7 +130,8 @@ namespace Evolution.Creatures
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, rotation - 1.5f, Origin, 1.0f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, rec, null, Color.White, rotation - 1.5f, Origin, SpriteEffects.None, 0f);
+            //spriteBatch.Draw(Texture, Position, null, Color.White, rotation - 1.5f, Origin, 1.0f, SpriteEffects.None, 0f);
             base.Draw(spriteBatch, gameTime);
         }
 
