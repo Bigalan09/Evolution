@@ -52,7 +52,7 @@ namespace Evolution
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
 

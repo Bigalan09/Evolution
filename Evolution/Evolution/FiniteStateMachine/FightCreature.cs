@@ -27,17 +27,25 @@ namespace Evolution.FiniteStateMachine
         {
             Creature c = (Creature)ent;
             c.To = enemy.Position;
-            if (reg.IsReady(gameTime))
+            if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, enemy.GetType()).Count > 0)
             {
-                int Attack = Randomiser.nextInt(0, c.Strength) - Randomiser.nextInt(0, enemy.Defence);
-                enemy.Health -= Attack;
-                c.Energy--;
-                if (enemy.Health <= 1)
+                if (reg.IsReady(gameTime))
                 {
-                    enemy.FSM.ChangeState(new Dying());
-                    c.Energy = enemy.Energy + 10;
-                    c.FSM.ChangeState(new Wander());
+                    int Attack = Randomiser.nextInt(0, c.Strength) - Randomiser.nextInt(0, enemy.Defence);
+                    enemy.Health -= Attack;
+                    c.Energy--;
+                    if (enemy.Health <= 1)
+                    {
+                        enemy.FSM.ChangeState(new Dying());
+                        c.Energy = enemy.Energy + 10;
+                        c.FSM.ChangeState(new Wander());
+                    }
                 }
+            }
+            else
+            {
+                c.FSM.ChangeState(new Wander());
+                enemy.FSM.ChangeState(new Wander());
             }
         }
 
