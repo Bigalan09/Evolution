@@ -30,13 +30,14 @@ namespace Evolution.FiniteStateMachine
             {
                 Creature c = (Creature)ent;
                 c.Energy--;
-                if (Randomiser.nextInt(0, 10) > 8)
+                if (Randomiser.nextInt(0, 10) > 4)
                 {
                     List<Chromosome> childrenChromosomes = c.Chromosome.Reproduce(partner.Chromosome);
                     c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[0]);
                     c.FSM.ChangeState(new Wander());
                     partner.FSM.ChangeState(new Wander());
                 }
+                Game1.particleEffect.Trigger(c.Position);
             }
         }
 

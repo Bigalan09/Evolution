@@ -14,6 +14,11 @@ using Evolution.Resources;
 using Evolution.Creatures;
 using Evolution.Utils;
 
+using ProjectMercury;
+using ProjectMercury.Emitters;
+using ProjectMercury.Modifiers;
+using ProjectMercury.Renderers;
+
 namespace Evolution
 {
     /// <summary>
@@ -35,6 +40,9 @@ namespace Evolution
 
         private SpriteFont font;
 
+        public static ParticleEffect particleEffect;
+        Renderer particleRenderer;
+
         public Game1()
         {
             Content.RootDirectory = "Content";
@@ -44,9 +52,15 @@ namespace Evolution
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
+
+            particleEffect = new ParticleEffect();
+            particleRenderer = new SpriteBatchRenderer
+            {
+                GraphicsDeviceService = graphics
+            };
         }
 
         protected override void Initialize()
@@ -61,6 +75,12 @@ namespace Evolution
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("arial");
+
+            particleEffect = Content.Load<ParticleEffect>("MagicTrail");
+            particleEffect.LoadContent(Content);
+            particleEffect.Initialise();
+
+            particleRenderer.LoadContent(Content);
             
             world.LoadContent(Content);
         }
@@ -76,7 +96,12 @@ namespace Evolution
                 Exit();
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
                 world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+            }
+
+            float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            particleEffect.Update(deltaSeconds);
 
             world.Update(gameTime);
             base.Update(gameTime);
@@ -85,6 +110,8 @@ namespace Evolution
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.ForestGreen);
+
+            particleRenderer.RenderEffect(particleEffect);
 
             spriteBatch.Begin();
             world.Draw(spriteBatch, gameTime);
