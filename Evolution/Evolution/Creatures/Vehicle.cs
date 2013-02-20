@@ -105,8 +105,8 @@ namespace Evolution.Creatures
                 Side = new Vector2(-Heading.Y, Heading.X);
             }
             Wrap();
-            speed = (Mass / 500) - max_speed;
-            rec = new Rectangle((int)Position.X, (int)Position.Y, (int)(Texture.Width - Mass / 50), (int)(Texture.Height - Mass / 50));
+            speed = (1 / mass * 25);
+            rec = new Rectangle((int)Position.X, (int)Position.Y, (int)(Texture.Width + Mass / 75), (int)(Texture.Height + Mass / 75));
             base.Update(gameTime);
         }
 

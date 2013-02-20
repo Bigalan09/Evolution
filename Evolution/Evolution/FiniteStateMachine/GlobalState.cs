@@ -6,6 +6,7 @@ using Evolution.Creatures;
 using Evolution.Resources;
 using Microsoft.Xna.Framework;
 using Evolution.Utils;
+using Evolution.Genetics;
 
 namespace Evolution.FiniteStateMachine
 {
@@ -48,7 +49,7 @@ namespace Evolution.FiniteStateMachine
                         }
                     }
                 }
-                if (!c.FSM.IsInState(typeof(Dying)) && c.Age > 100) c.FSM.ChangeState(new Dying());
+                if (!c.FSM.IsInState(typeof(Dying)) && c.Age > c.Chromosome.GetGene(PropertyType.Age_Death).Value) c.FSM.ChangeState(new Dying());
             }
         }
 
