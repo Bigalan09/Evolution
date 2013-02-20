@@ -36,6 +36,7 @@ namespace Evolution.FiniteStateMachine
                     c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[0]);
                     c.FSM.ChangeState(new Wander());
                     partner.FSM.ChangeState(new Wander());
+                    c.Energy -= 50;
                 }
                 Game1.particleEffect.Trigger(c.Position);
             }
