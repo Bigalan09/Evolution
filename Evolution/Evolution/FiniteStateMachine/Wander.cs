@@ -32,7 +32,7 @@ namespace Evolution.FiniteStateMachine
             c.Position = c.Position + c.Velocity;
 
 
-            if (c.Energy <= 90 && !c.FSM.IsInState(typeof(EatFood)))
+            if (c.Energy <= 50 && !c.FSM.IsInState(typeof(EatFood)))
             {
                 if (c is Herbivore)
                 {

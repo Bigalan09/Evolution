@@ -16,6 +16,8 @@ namespace Evolution.Creatures
         private Chromosome chromosome;
         private float energy = 100f;
         private int age = 0;
+        private int strength = 0;
+        private int defence = 0;
         private float health = 100f;
         private CreatureGroup group;
         private Resource memory = null;
@@ -26,6 +28,12 @@ namespace Evolution.Creatures
         {
             get { return chromosome; }
             set { chromosome = value; SetProperties(); }
+        }
+
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
         }
 
         public float Energy
@@ -44,6 +52,23 @@ namespace Evolution.Creatures
         {
             get { return group; }
         }
+
+        public float Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
+
+        public int Strength
+        {
+            get { return strength; }
+        }
+
+        public int Defence
+        {
+            get { return defence; }
+        }
+
         public int Carrying
         {
             get { return carrying; }
@@ -77,6 +102,8 @@ namespace Evolution.Creatures
             this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value * 10;
             this.Max_Force = .1f;
             this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 100;
+            this.strength = (int)chromosome.GetGene(PropertyType.Strength).Value;
+            this.defence = (int)chromosome.GetGene(PropertyType.Defence).Value;
         }
 
         public override void LoadContent(ContentManager content)

@@ -29,10 +29,14 @@ namespace Evolution
 
         public void Update(GameTime gameTime)
         {
-            foreach (DictionaryEntry entry in entities)
+            try
             {
-                ((Entity)(entry.Value)).Update(gameTime);
+                foreach (DictionaryEntry entry in entities)
+                {
+                    ((Entity)(entry.Value)).Update(gameTime);
+                }
             }
+            catch (Exception) { }
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

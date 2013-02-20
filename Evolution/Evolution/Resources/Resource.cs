@@ -65,7 +65,7 @@ namespace Evolution.Resources
                 age++;
             }
 
-            if (age >= 5 || amount<= 0)
+            if (age >= 5 || amount <= 0)
             {
                 resManager.removeResource(this);
             }

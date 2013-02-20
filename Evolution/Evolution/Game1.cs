@@ -40,18 +40,18 @@ namespace Evolution
             Content.RootDirectory = "Content";
 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 200;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 400;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            Randomiser.Instance(-1);
+            Randomiser.Instance(0);
             world = new GameWorld(this);
 
             base.Initialize();

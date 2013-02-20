@@ -63,6 +63,8 @@ namespace Evolution.Genetics
         {
             addGene(PropertyType.Max_Speed, Randomiser.nextInt(0, 100));
             addGene(PropertyType.Body_Mass, Randomiser.nextInt(0, 100));
+            addGene(PropertyType.Strength, Randomiser.nextInt(0, 100));
+            addGene(PropertyType.Defence, Randomiser.nextInt(0, 100));
             addGene(PropertyType.Aquatic, Randomiser.nextInt(0, 1));
         }
 

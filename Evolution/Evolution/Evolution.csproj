@@ -80,8 +80,11 @@
     <Compile Include="Creatures\Omnivore.cs" />
     <Compile Include="Creatures\SteeringBehaviour.cs" />
     <Compile Include="EntityManager.cs" />
+    <Compile Include="FiniteStateMachine\Dying.cs" />
     <Compile Include="FiniteStateMachine\EatFood.cs" />
+    <Compile Include="FiniteStateMachine\FightCreature.cs" />
     <Compile Include="FiniteStateMachine\GlobalState.cs" />
+    <Compile Include="FiniteStateMachine\Reproduce.cs" />
     <Compile Include="FiniteStateMachine\Wander.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
