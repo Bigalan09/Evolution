@@ -30,8 +30,11 @@ namespace Evolution.FiniteStateMachine
                        Resource r = (Resource)c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource))[0];
                        r.Amount--;
                        c.Energy++;
-                       if (r.Amount <= 0) r.Alive = false;
-                       c.FSM.ChangeState(new Wander());
+                       if (r.Amount <= 0)
+                       {
+                           r.Alive = false;
+                           c.FSM.ChangeState(new Wander());
+                       }
                    }
                }
                else if (c is Carnivore)
@@ -57,8 +60,11 @@ namespace Evolution.FiniteStateMachine
                            Resource r = (Resource)foodList[0];
                            r.Amount--;
                            c.Energy++;
-                           if (r.Amount <= 0) r.Alive = false;
-                           c.FSM.ChangeState(new Wander());
+                           if (r.Amount <= 0)
+                           {
+                               r.Alive = false;
+                               c.FSM.ChangeState(new Wander());
+                           }
                        }
                        else
                        {

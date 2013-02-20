@@ -11,7 +11,7 @@ namespace Evolution.FiniteStateMachine
 {
     class GlobalState : State
     {
-        private Regulator reg = new Regulator(5, 0);
+        private Regulator reg = new Regulator(2, 0);
         public GlobalState()
         {
 
