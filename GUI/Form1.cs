@@ -24,16 +24,17 @@ namespace GUI
         private void btnStart_Click(object sender, EventArgs e)
         {
             btnStart.Enabled = false;
-            txtGrowth.Enabled = false;
-            txtMutation.Enabled = false;
-            txtReproduction.Enabled = false;
+            trackGrowth.Enabled = false;
+            trackReproduction.Enabled = false;
+            trackMutation.Enabled = false;
             txtSeed.Enabled = false;
             cmbCrossover.Enabled = false;
 
-            int seed = int.Parse(txtSeed.Text);
-            int reproduction = int.Parse(txtReproduction.Text);
-            int mutation = int.Parse(txtMutation.Text);
-            int growth = int.Parse(txtGrowth.Text);
+
+            int seed = (txtSeed.Text.Length == 0) ? -1 : txtSeed.Text.GetHashCode();
+            int reproduction = trackReproduction.Value;
+            int mutation = trackMutation.Value;
+            int growth = trackGrowth.Value;
 
             Params pa = new Params(seed, reproduction, mutation, ((ComboboxItem)cmbCrossover.SelectedItem).Value.ToString(), growth);
             string xml = Serialiser.Serialise<Params>(pa);
@@ -54,9 +55,9 @@ namespace GUI
                 firstProc.WaitForExit();
 
                 btnStart.Enabled = true;
-                txtGrowth.Enabled = true;
-                txtMutation.Enabled = true;
-                txtReproduction.Enabled = true;
+                trackGrowth.Enabled = true;
+                trackReproduction.Enabled = true;
+                trackMutation.Enabled = true;
                 txtSeed.Enabled = true;
                 cmbCrossover.Enabled = true;
                 btnStart.Enabled = true;
@@ -70,11 +71,32 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            trackReproduction.Value = 89;
+            trackMutation.Value = 4;
+            trackGrowth.Value = 50;
 
+            lblRepRate.Text = trackReproduction.Value + "%";
+            lblMutRate.Text = trackMutation.Value + "%";
+            lblGrowRate.Text = trackGrowth.Value + "%";
 
             cmbCrossover.Items.Add(new ComboboxItem("One-Point Crossover", "ONE_POINT"));
             cmbCrossover.Items.Add(new ComboboxItem("Multi-Point Crossover", "MULTI_POINT"));
             cmbCrossover.SelectedIndex = 0;
+        }
+
+        private void trackReproduction_Scroll(object sender, EventArgs e)
+        {
+            lblRepRate.Text = trackReproduction.Value + "%";
+        }
+
+        private void trackMutation_Scroll(object sender, EventArgs e)
+        {
+            lblMutRate.Text = trackMutation.Value + "%";
+        }
+
+        private void trackGrowth_Scroll(object sender, EventArgs e)
+        {
+            lblGrowRate.Text = trackGrowth.Value + "%";
         }
     }
 }
