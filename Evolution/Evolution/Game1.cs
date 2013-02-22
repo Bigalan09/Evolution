@@ -18,6 +18,10 @@ using ProjectMercury;
 using ProjectMercury.Emitters;
 using ProjectMercury.Modifiers;
 using ProjectMercury.Renderers;
+using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Text;
 
 namespace Evolution
 {
@@ -42,6 +46,7 @@ namespace Evolution
 
         public static ParticleEffect particleEffect;
         Renderer particleRenderer;
+        public static Params Parameters;
 
         public Game1()
         {
@@ -50,7 +55,7 @@ namespace Evolution
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-
+            graphics.PreferMultiSampling = true;
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             graphics.IsFullScreen = true;
 
@@ -61,11 +66,13 @@ namespace Evolution
             {
                 GraphicsDeviceService = graphics
             };
+
+            Parameters = Serialiser.DeserialiseFromFile<Params>("./params.xml");
         }
 
         protected override void Initialize()
         {
-            Randomiser.Instance(0);
+            Randomiser.Instance(Parameters.Seed);
             world = new GameWorld(this);
 
             base.Initialize();

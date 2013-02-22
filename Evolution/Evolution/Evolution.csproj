@@ -92,6 +92,7 @@
     <Compile Include="GameWorld.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
     <Compile Include="Genetics\Gene.cs" />
+    <Compile Include="Params.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Utils\Randomiser.cs" />
     <Compile Include="Creatures\Vehicle.cs" />
     <Compile Include="Utils\Regulator.cs" />
+    <Compile Include="Utils\Serialiser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
