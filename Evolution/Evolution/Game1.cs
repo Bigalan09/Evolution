@@ -22,6 +22,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Text;
+using System.Collections;
 
 namespace Evolution
 {
@@ -44,7 +45,7 @@ namespace Evolution
 
         private SpriteFont font;
 
-        public static ParticleEffect particleEffect;
+        public static Dictionary<string, ParticleEffect> particleEffects = new Dictionary<string, ParticleEffect>(StringComparer.Ordinal);
         Renderer particleRenderer;
         public static Params Parameters;
 
@@ -61,7 +62,8 @@ namespace Evolution
 
             this.IsMouseVisible = true;
 
-            particleEffect = new ParticleEffect();
+            particleEffects.Add("Heart", null);
+
             particleRenderer = new SpriteBatchRenderer
             {
                 GraphicsDeviceService = graphics
@@ -83,9 +85,22 @@ namespace Evolution
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("arial");
 
-            particleEffect = Content.Load<ParticleEffect>("MagicTrail");
-            particleEffect.LoadContent(Content);
-            particleEffect.Initialise();
+            ArrayList modified = new ArrayList();
+
+            foreach (KeyValuePair<string, ParticleEffect> particle in particleEffects)
+            {
+                ParticleEffect particleEffect = particle.Value;
+                particleEffect = Content.Load<ParticleEffect>(particle.Key);
+                particleEffect.LoadContent(Content);
+                particleEffect.Initialise();
+                modified.Add(new KeyValuePair<string, ParticleEffect>(particle.Key, particleEffect));
+            }
+
+            foreach (KeyValuePair<string, ParticleEffect> p in modified)
+            {
+                particleEffects[p.Key] = p.Value;
+            }
+            modified.Clear();
 
             particleRenderer.LoadContent(Content);
             
@@ -103,12 +118,15 @@ namespace Evolution
                 Exit();
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
                 world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
-            }
 
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            particleEffect.Update(deltaSeconds);
+
+            foreach (KeyValuePair<string, ParticleEffect> particle in particleEffects)
+            {
+                ParticleEffect particleEffect = particle.Value;
+                particleEffect.Update(deltaSeconds);
+            }
 
             world.Update(gameTime);
             base.Update(gameTime);
@@ -126,7 +144,11 @@ namespace Evolution
             spriteBatch.DrawString(font, "Crossover: " + Parameters.Crossover, new Vector2(10, 80), Color.White);
             spriteBatch.End();
 
-            particleRenderer.RenderEffect(particleEffect);
+            foreach (KeyValuePair<string, ParticleEffect> particle in particleEffects)
+            {
+                ParticleEffect particleEffect = particle.Value;
+                particleRenderer.RenderEffect(particleEffect);
+            }
 
             base.Draw(gameTime);
         }

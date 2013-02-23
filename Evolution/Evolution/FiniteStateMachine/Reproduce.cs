@@ -2,6 +2,7 @@
 using Evolution.Genetics;
 using Evolution.Utils;
 using Microsoft.Xna.Framework;
+using ProjectMercury;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Evolution.FiniteStateMachine
         public void Enter(Entity ent)
         {
             partner.To = ent.Position;
-            Game1.particleEffect.Trigger(ent.Position);
+            Game1.particleEffects["Heart"].Trigger(ent.Position);
         }
 
         public void Execute(Entity ent, GameTime gameTime)
@@ -34,7 +35,7 @@ namespace Evolution.FiniteStateMachine
                 partner.Energy--;
                 if (Randomiser.nextDouble() < Game1.Parameters.Reproduction)
                 {
-                    Game1.particleEffect.Trigger(c.Position);
+                    Game1.particleEffects["Heart"].Trigger(ent.Position);
                     List<Chromosome> childrenChromosomes = c.Chromosome.Reproduce(partner.Chromosome);
                     if (Randomiser.nextDouble() < Game1.Parameters.Mutation)
                     {
