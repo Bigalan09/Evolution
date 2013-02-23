@@ -8,9 +8,9 @@ namespace Evolution
     public class Params
     {
         public int Seed = 0;
-        public int Reproduction = 0;
-        public int Mutation = 0;
-        public int Growth = 0;
+        public double Reproduction = 0;
+        public double Mutation = 0;
+        public double Growth = 0;
         public string Crossover = "";
 
         public Params()

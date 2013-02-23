@@ -70,6 +70,9 @@ namespace Evolution
             };
 
             Parameters = Serialiser.DeserialiseFromFile<Params>("./params.xml");
+            Parameters.Growth = Parameters.Growth / 100;
+            Parameters.Mutation = Parameters.Mutation / 100;
+            Parameters.Reproduction = Parameters.Reproduction / 100;
         }
 
         protected override void Initialize()
