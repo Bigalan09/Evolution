@@ -123,7 +123,7 @@ namespace Evolution
             spriteBatch.DrawString(font, "Herbivore: " + world.EntityManager.GetAll(typeof(Herbivore)).Count, new Vector2(10, 5), Color.White);
             spriteBatch.DrawString(font, "Carnivore: " + world.EntityManager.GetAll(typeof(Carnivore)).Count, new Vector2(10, 30), Color.White);
             spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(10, 55), Color.White);
-            //spriteBatch.DrawString(font, "Generation: " + generation, new Vector2(10, 80), Color.White);
+            spriteBatch.DrawString(font, "Crossover: " + Parameters.Crossover, new Vector2(10, 80), Color.White);
             spriteBatch.End();
 
             particleRenderer.RenderEffect(particleEffect);

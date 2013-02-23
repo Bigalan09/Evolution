@@ -32,6 +32,7 @@
             this.txtSeed = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblMutRate = new System.Windows.Forms.Label();
             this.trackMutation = new System.Windows.Forms.TrackBar();
@@ -45,7 +46,6 @@
             this.lblGrowRate = new System.Windows.Forms.Label();
             this.trackGrowth = new System.Windows.Forms.TrackBar();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackMutation)).BeginInit();
@@ -93,6 +93,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Simulation Properties";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(257, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(157, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Leave blank for a random seed.";
+            // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -114,7 +124,7 @@
             // lblMutRate
             // 
             this.lblMutRate.AutoSize = true;
-            this.lblMutRate.Location = new System.Drawing.Point(237, 118);
+            this.lblMutRate.Location = new System.Drawing.Point(237, 99);
             this.lblMutRate.Name = "lblMutRate";
             this.lblMutRate.Size = new System.Drawing.Size(21, 13);
             this.lblMutRate.TabIndex = 16;
@@ -132,7 +142,7 @@
             // lblRepRate
             // 
             this.lblRepRate.AutoSize = true;
-            this.lblRepRate.Location = new System.Drawing.Point(237, 51);
+            this.lblRepRate.Location = new System.Drawing.Point(237, 48);
             this.lblRepRate.Name = "lblRepRate";
             this.lblRepRate.Size = new System.Drawing.Size(21, 13);
             this.lblRepRate.TabIndex = 14;
@@ -191,7 +201,7 @@
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Location = new System.Drawing.Point(12, 243);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(420, 89);
+            this.groupBox3.Size = new System.Drawing.Size(420, 76);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Resource Properties";
@@ -199,7 +209,7 @@
             // lblGrowRate
             // 
             this.lblGrowRate.AutoSize = true;
-            this.lblGrowRate.Location = new System.Drawing.Point(237, 67);
+            this.lblGrowRate.Location = new System.Drawing.Point(237, 48);
             this.lblGrowRate.Name = "lblGrowRate";
             this.lblGrowRate.Size = new System.Drawing.Size(27, 13);
             this.lblGrowRate.TabIndex = 15;
@@ -222,16 +232,6 @@
             this.label5.Size = new System.Drawing.Size(70, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "Growth Rate:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(257, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(157, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Leave blank for a random seed.";
             // 
             // Form1
             // 

@@ -57,7 +57,7 @@ namespace Evolution.Resources
             if (currentTime >= duration)
             {
                 currentTime -= duration;
-                if (Randomiser.nextDouble() < 0.25)
+                if (Randomiser.nextDouble() < Game1.Parameters.Growth)
                 {
                     resManager.addResource(this);
                 }

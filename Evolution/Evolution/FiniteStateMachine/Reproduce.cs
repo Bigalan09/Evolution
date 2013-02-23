@@ -32,11 +32,23 @@ namespace Evolution.FiniteStateMachine
                 Creature c = (Creature)ent;
                 c.Energy--;
                 partner.Energy--;
-                if (Randomiser.nextInt(0, 2) > 1)
+                if (Randomiser.nextDouble() < Game1.Parameters.Reproduction)
                 {
                     Game1.particleEffect.Trigger(c.Position);
                     List<Chromosome> childrenChromosomes = c.Chromosome.Reproduce(partner.Chromosome);
+                    if (Randomiser.nextDouble() < Game1.Parameters.Mutation)
+                    {
+                        childrenChromosomes[0].Mutate();
+                    }
                     c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[0]);
+                    if (Randomiser.nextDouble() < 0.5)
+                    {
+                        if (Randomiser.nextDouble() < Game1.Parameters.Mutation)
+                        {
+                            childrenChromosomes[1].Mutate();
+                        }
+                        c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[1]);
+                    }
                     c.Energy -= 50;
                     partner.Energy -= 50;
                 }

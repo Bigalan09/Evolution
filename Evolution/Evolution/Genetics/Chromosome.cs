@@ -91,28 +91,77 @@ namespace Evolution.Genetics
             List<Chromosome> children = new List<Chromosome>();
             Chromosome child1 = new Chromosome();
             Chromosome child2 = new Chromosome();
-            int half = genes.Count / 2;
 
-            // Get first and second half of 1st parent Genes
-            for (int i = 0; i < half; i++)
-            {
-                child1.addGene(genes[i]);
-            }
-            for (int i = half; i < genes.Count; i++)
-            {
-                child2.addGene(genes[i]);
-            }
 
-            // Get first and second hald of 2nd parent Genes;
-            for (int i = 0; i < half; i++)
+            if (Game1.Parameters.Crossover.Equals("ONE_POINT"))
             {
-                child2.addGene(partner.genes[i]);
-            }
-            for (int i = half; i < genes.Count; i++)
-            {
-                child1.addGene(partner.genes[i]);
-            }
 
+                int half = genes.Count / 2;
+
+                // Get first and second half of 1st parent Genes
+                for (int i = 0; i < half; i++)
+                {
+                    child1.addGene(genes[i]);
+                }
+                for (int i = half; i < genes.Count; i++)
+                {
+                    child2.addGene(genes[i]);
+                }
+
+                // Get first and second hald of 2nd parent Genes;
+                for (int i = 0; i < half; i++)
+                {
+                    child2.addGene(partner.genes[i]);
+                }
+                for (int i = half; i < genes.Count; i++)
+                {
+                    child1.addGene(partner.genes[i]);
+                }
+            }
+            else
+            {
+                int size = genes.Count;
+                int[] swapIndexes = new int[size / 2];
+
+                for (int i = 0; i < (size / 2); i++)
+                {
+                    int r = Randomiser.nextInt(0, size);
+                    while (swapIndexes.Contains<int>(r))
+                        r = Randomiser.nextInt(0, size);
+                    swapIndexes[i] = r;
+                }
+
+                //Child 1
+                for (int i = 0; i < size; i++)
+                {
+                    Gene tmp = genes[i];
+                    for (int j = 0; j < (size / 2); j++)
+                    {
+                        if (i == swapIndexes[j])
+                        {
+                            tmp = partner.genes[swapIndexes[j]];
+                            continue;
+                        }
+                    }
+                    child1.addGene(tmp);
+                }
+
+                //Child 2
+                for (int i = 0; i < size; i++)
+                {
+                    Gene tmp = partner.genes[i];
+                    for (int j = 0; j < (size / 2); j++)
+                    {
+                        if (i == swapIndexes[j])
+                        {
+                            tmp = genes[swapIndexes[j]];
+                            continue;
+                        }
+                    }
+                    child2.addGene(tmp);
+                }
+
+            }
             children.Add(child1);
             children.Add(child2);
 
