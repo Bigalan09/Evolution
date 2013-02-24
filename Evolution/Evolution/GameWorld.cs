@@ -54,9 +54,9 @@ namespace Evolution
             resourceManager.CreateResourceCluster(5, 50, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
             resourceManager.CreateResourceCluster(5, 50, new Vector2((Game1.ScreenBounds.Width - 150) / 2, (Game1.ScreenBounds.Height - 150) / 2));
 
-            HerbivoreGroup.CreatePopulation(25);
-            CarnivoreGroup.CreatePopulation(25);
-            OmnivoreGroup.CreatePopulation(25);
+            HerbivoreGroup.CreatePopulation(20);
+            CarnivoreGroup.CreatePopulation(20);
+            OmnivoreGroup.CreatePopulation(20);
 
             entityManager.LoadContent(gameRef.Content);
 

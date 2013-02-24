@@ -106,14 +106,7 @@ namespace Evolution
 
         internal void RemoveEntity(Entity creature)
         {
-            object[] keys = new object[this.entities.Count];
-            this.entities.Keys.CopyTo(keys, 0);
-
-            for (int index = keys.Length - 1; index >= 0; --index)
-            {
-                if (entities[keys[index]] == creature)
-                    entities.Remove(keys[index]);
-            }
+            creature.Alive = false;
         }
 
         public void RemoveAll(Type type)

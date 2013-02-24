@@ -21,40 +21,34 @@ namespace Evolution.FiniteStateMachine
         public void Enter(Entity ent)
         {
             Creature c = (Creature)ent;
-            Game1.particleEffects["Sword"].Trigger(ent.Position);
         }
 
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-            c.To = enemy.Position;
-            if ((c.Position + c.Origin - enemy.Position).Length() <= 15)
+            if (!enemy.FSM.IsInState(typeof(FightCreature)))
+                enemy.FSM.ChangeState(new FightCreature(c));
+
+            if (reg.IsReady(gameTime))
             {
-
-                if (!enemy.FSM.IsInState(typeof(FightCreature)))
-                    enemy.FSM.ChangeState(new FightCreature(c));
-
-                if (reg.IsReady(gameTime))
-                {
-                    Game1.particleEffects["Sword"].Trigger(ent.Position);
-
-                    int Attack = Randomiser.nextInt(0, c.Strength) - Randomiser.nextInt(0, enemy.Defence);
-                    enemy.Health -= Attack;
-                    c.Energy--;
-                    if (enemy.Health <= 0)
-                    {
-                        enemy.FSM.ChangeState(new Dying());
-                        if (!(c is Herbivore))
-                            c.Energy = enemy.Energy + 10;
-                        c.FSM.ChangeState(new Wander());
-                    }
-                }
+                Game1.particleEffects["Sword"].Trigger(ent.Position);
+                int Attack = Randomiser.nextInt(0, c.Strength) - Randomiser.nextInt(0, enemy.Defence);
+                Attack = Math.Max(0, Math.Min(Attack, 100));
+                Console.WriteLine(c.ID + " ATTACK: " + Attack);
+                enemy.Health -= Attack;
+                c.Energy -= 5;
             }
-            else
+
+            if (c.Health <= 1)
             {
-                c.FSM.ChangeState(new Wander());
                 enemy.FSM.ChangeState(new Wander());
             }
+            if (enemy.Health <= 1)
+            {
+                enemy.FSM.ChangeState(new Dying());
+                c.FSM.ChangeState(new Wander());
+            }
+
         }
 
         public void Exit(Entity ent)

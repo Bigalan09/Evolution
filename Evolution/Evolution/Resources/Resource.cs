@@ -12,8 +12,6 @@ namespace Evolution.Resources
 {
     class Resource : Entity
     {
-        private float duration = 10.0f;
-        private float currentTime = 0f;
         private int age = 0;
         private float amount = 10f;
 
@@ -23,6 +21,9 @@ namespace Evolution.Resources
             set { amount = value; }
         }
         private ResourceManager resManager;
+        private Regulator reg;
+        private Regulator regAge;
+        private int max_age;
 
         public Resource(ResourceManager resManager, float x, float y)
             : base(x, y)
@@ -41,7 +42,9 @@ namespace Evolution.Resources
 
         private void Initialiser()
         {
-            duration = (float)Randomiser.nextInt(15, 20);
+            reg = new Regulator(Randomiser.nextInt(10, 20), 0);
+            regAge = new Regulator(Randomiser.nextInt(2, 5), 0);
+            max_age = Randomiser.nextInt(10, 20);
         }
 
         public override void LoadContent(ContentManager content)
@@ -52,24 +55,22 @@ namespace Evolution.Resources
 
         public override void Update(GameTime gameTime)
         {
-            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (currentTime >= duration)
+            if (age >= max_age || amount <= 0)
             {
-                currentTime -= duration;
+                resManager.removeResource(this);
+            }
+            if (regAge.IsReady(gameTime))
+            {
+                amount++;
+                age++;
+            }
+            if (reg.IsReady(gameTime)) {
                 if (Randomiser.nextDouble() < Game1.Parameters.Growth)
                 {
                     resManager.addResource(this);
                 }
-                amount += 5.0f;
-                age++;
+                
             }
-
-            if (age >= 5 || amount <= 0)
-            {
-                resManager.removeResource(this);
-            }
-
             base.Update(gameTime);
         }
 

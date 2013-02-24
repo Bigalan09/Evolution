@@ -32,19 +32,13 @@ namespace Evolution.FiniteStateMachine
             c.Position = c.Position + c.Velocity;
 
 
-            if (c.Energy < 75 && !c.FSM.IsInState(typeof(EatFood)))
+            if (c.Energy < 99 && !c.FSM.IsInState(typeof(EatFood)))
             {
                 if (c is Herbivore)
                 {
                     if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)).Count > 0)
                     {
-                        c.Memory = c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource))[0].Position;
                         c.FSM.ChangeState(new EatFood());
-                    }
-                    else
-                    {
-                        if (c.Memory != Vector2.Zero)
-                            c.FSM.ChangeState(new SeekFood());
                     }
                 } else if (c is Carnivore)
                 {
