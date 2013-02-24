@@ -71,9 +71,9 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            trackReproduction.Value = 89;
-            trackMutation.Value = 4;
-            trackGrowth.Value = 50;
+            trackReproduction.Value = 75;
+            trackMutation.Value = 3;
+            trackGrowth.Value = 20;
 
             lblRepRate.Text = trackReproduction.Value + "%";
             lblMutRate.Text = trackMutation.Value + "%";

@@ -112,26 +112,15 @@ namespace Evolution.Creatures
 
         private bool RotateToFacePosition()
         {
-            // current bot position
-            Vector2 from = Position;
-            // current position the bot is steering towards
-            // grab the max turn speed in radians
-            float maxRate = MathHelper.ToRadians((float)0.2f);
-
-            if (to != Position)
-            {
-                float x = to.X - from.X;
-                float y = to.Y - from.Y;
-                rotation = -((float)Math.Atan2(x, y) + MathHelper.Pi);
-            }
-
+            Vector2 direction = Position - To;
+            rotation = (float)(Math.Atan2(direction.Y, direction.X) + MathHelper.PiOver2) + 1.57079633f;
             return true;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(Texture, rec, null, Color.White, rotation - 1.5f, Origin, SpriteEffects.None, 0f);
-            //spriteBatch.Draw(Texture, Position, null, Color.White, rotation - 1.5f, Origin, 1.0f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, rec, null, Color.White, rotation, Origin, SpriteEffects.None, 0f);
+            //spriteBatch.Draw(Texture, Position, null, Color.White, rotation, Origin, 1.0f, SpriteEffects.None, 0f);
             base.Draw(spriteBatch, gameTime);
         }
 

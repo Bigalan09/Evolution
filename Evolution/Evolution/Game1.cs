@@ -63,6 +63,8 @@ namespace Evolution
             this.IsMouseVisible = true;
 
             particleEffects.Add("Heart", null);
+            particleEffects.Add("Sword", null);
+            particleEffects.Add("Death", null);
 
             particleRenderer = new SpriteBatchRenderer
             {

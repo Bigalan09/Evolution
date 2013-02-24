@@ -25,6 +25,7 @@ namespace Evolution.FiniteStateMachine
             if (c.Health <= 0)
             {
                 c.Alive = false;
+                Game1.particleEffects["Death"].Trigger(ent.Position);
             }
         }
 

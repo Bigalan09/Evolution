@@ -21,6 +21,7 @@ namespace Evolution.FiniteStateMachine
         public void Enter(Entity ent)
         {
             Creature c = (Creature)ent;
+            Game1.particleEffects["Sword"].Trigger(ent.Position);
         }
 
         public void Execute(Entity ent, GameTime gameTime)
@@ -35,19 +36,25 @@ namespace Evolution.FiniteStateMachine
 
                 if (reg.IsReady(gameTime))
                 {
+                    Game1.particleEffects["Sword"].Trigger(ent.Position);
+
                     int Attack = Randomiser.nextInt(0, c.Strength) - Randomiser.nextInt(0, enemy.Defence);
                     enemy.Health -= Attack;
                     c.Energy--;
                     if (enemy.Health <= 0)
                     {
                         enemy.FSM.ChangeState(new Dying());
-                        c.Energy = enemy.Energy + 10;
+                        if (!(c is Herbivore))
+                            c.Energy = enemy.Energy + 10;
                         c.FSM.ChangeState(new Wander());
                     }
                 }
             }
             else
+            {
                 c.FSM.ChangeState(new Wander());
+                enemy.FSM.ChangeState(new Wander());
+            }
         }
 
         public void Exit(Entity ent)

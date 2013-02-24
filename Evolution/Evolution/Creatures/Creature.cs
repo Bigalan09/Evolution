@@ -20,7 +20,7 @@ namespace Evolution.Creatures
         private int defence = 0;
         private float health = 100f;
         private CreatureGroup group;
-        private Resource memory = null;
+        private Vector2 memory = Vector2.Zero;
         private bool canReproduce = false;
         private int carrying = 0;
 
@@ -42,7 +42,7 @@ namespace Evolution.Creatures
             set { energy = value; }
         }
 
-        public Resource Memory
+        public Vector2 Memory
         {
             get { return memory; }
             set { memory = value; }
