@@ -29,6 +29,8 @@ namespace Evolution.FiniteStateMachine
             if (!enemy.FSM.IsInState(typeof(FightCreature)))
                 enemy.FSM.ChangeState(new FightCreature(c));
 
+            c.To = enemy.Position;
+
             if (reg.IsReady(gameTime))
             {
                 Game1.particleEffects["Sword"].Trigger(ent.Position);
