@@ -38,7 +38,6 @@ namespace Evolution.FiniteStateMachine
                     Game1.particleEffects["Sword"].Trigger(ent.Position);
                     int Attack = Randomiser.nextInt(0, c.Strength) - Randomiser.nextInt(0, enemy.Defence);
                     Attack = Math.Max(0, Math.Min(Attack, 100));
-                    Console.WriteLine(c.ID + " ATTACK: " + Attack);
                     enemy.Health -= Attack;
                     c.Energy -= 5;
                 }

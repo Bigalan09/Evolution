@@ -21,7 +21,7 @@ namespace Evolution.FiniteStateMachine
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-            c.Health--;
+            c.Health -= -(c.Energy);
             if (c.Health <= 0)
             {
                 c.Alive = false;
