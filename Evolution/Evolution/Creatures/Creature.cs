@@ -22,7 +22,7 @@ namespace Evolution.Creatures
         private CreatureGroup group;
         private Vector2 memory = Vector2.Zero;
         private bool canReproduce = false;
-        private int carrying = 6;
+        private int carrying = 4;
 
         public Chromosome Chromosome
         {

@@ -24,11 +24,12 @@ namespace Evolution.FiniteStateMachine
         {
             Creature c = (Creature)ent;
 
-            if (c.Carrying >= 5 || c.Energy < 90)
+            if (c.Carrying >= 5)
             {
                 float amount = Math.Min(0, (c.Carrying - (100 - c.Energy)));
                 c.Carrying -= (int)amount;
                 c.Energy += amount;
+
             }
             else
             {
