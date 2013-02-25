@@ -26,10 +26,10 @@ namespace Evolution.FiniteStateMachine
             Vector2 steering_direction = c.SteeringBehaviour.Seek(c.To);
             Vector2 steering_force = truncate(steering_direction, c.Max_Force);
             Vector2 acceleration = steering_force / c.Mass;
-            c.Velocity = truncate(c.Velocity + acceleration, 0.001f);
+            c.Velocity = truncate(c.Velocity + acceleration, 0.01f);
             c.Position = c.Position + c.Velocity;
 
-            c.Health -= 5;
+            c.Health --;
             if (c.Health <= 0)
             {
                 Game1.particleEffects["Death"].Trigger(ent.Position);

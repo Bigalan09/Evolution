@@ -32,8 +32,12 @@ namespace Evolution.FiniteStateMachine
             c.Position = c.Position + c.Velocity;
 
 
-            if (c.Energy < 60 && !c.FSM.IsInState(typeof(EatFood)))
+            if (c.Energy < 40 && !c.FSM.IsInState(typeof(EatFood)))
             {
+                if (c.Carrying >= 5)
+                {
+                    c.FSM.ChangeState(new EatFood());
+                }
                 if (c is Herbivore)
                 {
                     if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)).Count > 0)

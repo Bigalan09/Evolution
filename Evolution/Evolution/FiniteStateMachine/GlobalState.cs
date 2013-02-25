@@ -43,14 +43,18 @@ namespace Evolution.FiniteStateMachine
                     {
                         c.Energy -= 1;
                     }
-                    if (c.Energy > 25 && c.Age > 5 && !c.FSM.IsInState(typeof(Reproduce)))
+                    if ((!c.FSM.IsInState(typeof(EatFood))) && c.Energy <= 1)
+                    {
+                        c.FSM.ChangeState(new Dying());
+                    }
+                    if (c.Energy > 25 && c.Age > 4 && !c.FSM.IsInState(typeof(Reproduce)))
                     {
                         List<Entity> partnerList = c.Group.GameWorld.EntityManager.InRadius(10, c.Position, c.GetType());
                         if (partnerList.Count > 0)
                         {
                             foreach (Creature partner in partnerList)
                             {
-                                if (partner.Energy > 25 && partner.Age > 5 && !partner.FSM.IsInState(typeof(Reproduce)))
+                                if (partner.Energy > 25 && partner.Age > 4 && !partner.FSM.IsInState(typeof(Reproduce)))
                                 {
                                     partner.FSM.ChangeState(new Reproduce(c));
                                     c.FSM.ChangeState(new Reproduce(partner));

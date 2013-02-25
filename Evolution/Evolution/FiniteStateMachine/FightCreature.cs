@@ -52,13 +52,12 @@ namespace Evolution.FiniteStateMachine
 
                 float remainingEnergy = 100 - c.Energy;
                 float eat = (enemy.Energy + enemy.Carrying + 50);
+                float remainingFood = eat - remainingEnergy;
 
-                if (eat > remainingEnergy) {
-                    float carry = c.Energy - eat;
+                if (eat > remainingEnergy && remainingFood > 0) {
+                    c.Carrying += (int)remainingFood;
                 }
 
-                if (c.Energy >= 100)
-                    c.Carrying++;
                 enemy.FSM.ChangeState(new Dying());
                 c.FSM.ChangeState(new Wander());
             }

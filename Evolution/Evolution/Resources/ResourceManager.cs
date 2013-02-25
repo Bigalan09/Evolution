@@ -28,7 +28,7 @@ namespace Evolution.Resources
 
         public void addResource(Resource resource)
         {
-            Resource res = new Resource(this, resource.Position.X + Randomiser.nextInt(-10, 10), resource.Position.Y + Randomiser.nextInt(-10, 10), resource.Texture);
+            Resource res = new Resource(this, resource.Position.X + Randomiser.nextInt(-25, 25), resource.Position.Y + Randomiser.nextInt(-25, 25), resource.Texture);
             res.LoadContent(gameWorld.GameRef.Content);
             gameWorld.EntityManager.AddEntity(res);
         }

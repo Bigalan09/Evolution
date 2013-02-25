@@ -100,7 +100,10 @@ namespace Evolution
             for (int index = keys.Length - 1; index >= 0; --index)
             {
                 if (!((Entity)entities[keys[index]]).Alive)
+                {
+                    Console.WriteLine(((Entity)entities[keys[index]]));
                     entities.Remove(keys[index]);
+                }
             }
         }
 
