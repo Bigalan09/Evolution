@@ -44,7 +44,7 @@ namespace Evolution.Resources
         {
             reg = new Regulator(Randomiser.nextInt(10, 20), 0);
             regAge = new Regulator(Randomiser.nextInt(2, 5), 0);
-            max_age = Randomiser.nextInt(5, 15);
+            max_age = Randomiser.nextInt(5, 18);
         }
 
         public override void LoadContent(ContentManager content)
