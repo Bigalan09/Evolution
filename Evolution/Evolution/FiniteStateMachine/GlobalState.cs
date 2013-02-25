@@ -41,7 +41,7 @@ namespace Evolution.FiniteStateMachine
                 {
                     if (!c.FSM.IsInState(typeof(EatFood)))
                     {
-                        c.Energy -= 1;
+                        c.Energy -= c.Speed;
                     }
                     if ((!c.FSM.IsInState(typeof(EatFood))) && c.Energy <= 1)
                     {

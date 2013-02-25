@@ -102,9 +102,6 @@ namespace Evolution
                 Entity ent = ((Entity)entities[keys[index]]);
                 if (!ent.Alive)
                 {
-                    if (ent is Creature) {
-                        Console.WriteLine(ent.ID + ":" + ent.Alive + ":" + ((Creature)ent).Health + ":" + ((Creature)ent).Energy);
-                    }
                     entities.Remove(keys[index]);
                 }
             }
