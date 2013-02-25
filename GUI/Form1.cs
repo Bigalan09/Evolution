@@ -73,7 +73,7 @@ namespace GUI
         {
             trackReproduction.Value = 75;
             trackMutation.Value = 3;
-            trackGrowth.Value = 75;
+            trackGrowth.Value = 50;
 
             lblRepRate.Text = trackReproduction.Value + "%";
             lblMutRate.Text = trackMutation.Value + "%";

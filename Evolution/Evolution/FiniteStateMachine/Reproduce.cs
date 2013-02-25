@@ -13,7 +13,7 @@ namespace Evolution.FiniteStateMachine
     class Reproduce : State
     {
         private Creature partner;
-        private Regulator reg = new Regulator(5, 0);
+        private Regulator reg = new Regulator(3, 0);
 
         public Reproduce(Creature partner)
         {
@@ -50,8 +50,8 @@ namespace Evolution.FiniteStateMachine
                         }
                         c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[1]);
                     }
-                    c.Energy -= 50;
-                    partner.Energy -= 50;
+                    c.Energy -= 20;
+                    partner.Energy -= 20;
                 }
                 c.FSM.ChangeState(new Wander());
                 partner.FSM.ChangeState(new Wander());
