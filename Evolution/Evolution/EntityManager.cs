@@ -99,9 +99,12 @@ namespace Evolution
 
             for (int index = keys.Length - 1; index >= 0; --index)
             {
-                if (!((Entity)entities[keys[index]]).Alive)
+                Entity ent = ((Entity)entities[keys[index]]);
+                if (!ent.Alive)
                 {
-                    Console.WriteLine(((Entity)entities[keys[index]]));
+                    if (ent is Creature) {
+                        Console.WriteLine(ent.ID + ":" + ent.Alive + ":" + ((Creature)ent).Health + ":" + ((Creature)ent).Energy);
+                    }
                     entities.Remove(keys[index]);
                 }
             }
