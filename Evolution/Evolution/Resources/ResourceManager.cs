@@ -33,7 +33,15 @@ namespace Evolution.Resources
         {
             if (gameWorld.EntityManager.GetAll(typeof(Resource)).Count <= 1000)
             {
-                Resource res = new Resource(this, resource.Position.X + Randomiser.nextInt(-25, 25), resource.Position.Y + Randomiser.nextInt(-25, 25), resource.Texture);
+                float x = resource.Position.X + Randomiser.nextInt(-25, 25);
+                float y = resource.Position.Y + Randomiser.nextInt(-25, 25);
+                while (Game1.ScreenBounds.Contains((int)x, (int)y))
+                {
+                    x = resource.Position.X + Randomiser.nextInt(-25, 25);
+                    y = resource.Position.Y + Randomiser.nextInt(-25, 25);
+                }
+
+                Resource res = new Resource(this, x, y, resource.Texture);
                 res.LoadContent(gameWorld.GameRef.Content);
                 gameWorld.EntityManager.AddEntity(res);
             }
