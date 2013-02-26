@@ -49,15 +49,17 @@ namespace Evolution.FiniteStateMachine
             }
             if (enemy.Health <= 0)
             {
+                if (!(c is Herbivore))
+                {
+                    float remainingEnergy = 100 - c.Energy;
+                    float eat = (enemy.Energy + enemy.Carrying + 50);
+                    float remainingFood = eat - remainingEnergy;
 
-                float remainingEnergy = 100 - c.Energy;
-                float eat = (enemy.Energy + enemy.Carrying + 50);
-                float remainingFood = eat - remainingEnergy;
-
-                if (eat > remainingEnergy && remainingFood > 0) {
-                    c.Carrying += (int)remainingFood;
+                    if (eat > remainingEnergy && remainingFood > 0)
+                    {
+                        c.Carrying += (int)remainingFood;
+                    }
                 }
-
                 enemy.FSM.ChangeState(new Dying());
                 c.FSM.ChangeState(new Wander());
             }

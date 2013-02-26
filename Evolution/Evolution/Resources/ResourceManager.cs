@@ -21,22 +21,36 @@ namespace Evolution.Resources
 
         public void addResource(float x, float y)
         {
-            Resource res = new Resource(this, x, y);
-            res.LoadContent(gameWorld.GameRef.Content);
-            gameWorld.EntityManager.AddEntity(res);
+            if (gameWorld.EntityManager.GetAll(typeof(Resource)).Count <= 1000)
+            {
+                Resource res = new Resource(this, x, y);
+                res.LoadContent(gameWorld.GameRef.Content);
+                gameWorld.EntityManager.AddEntity(res);
+            }
         }
 
         public void addResource(Resource resource)
         {
-            Resource res = new Resource(this, resource.Position.X + Randomiser.nextInt(-25, 25), resource.Position.Y + Randomiser.nextInt(-25, 25), resource.Texture);
-            res.LoadContent(gameWorld.GameRef.Content);
-            gameWorld.EntityManager.AddEntity(res);
+            if (gameWorld.EntityManager.GetAll(typeof(Resource)).Count <= 1000)
+            {
+                Resource res = new Resource(this, resource.Position.X + Randomiser.nextInt(-25, 25), resource.Position.Y + Randomiser.nextInt(-25, 25), resource.Texture);
+                res.LoadContent(gameWorld.GameRef.Content);
+                gameWorld.EntityManager.AddEntity(res);
+            }
         }
 
         public void removeResource(Resource resource)
         {
             resource.Alive = false;
             gameWorld.EntityManager.RemoveEntity(resource);
+            if (gameWorld.EntityManager.GetAll(typeof(Resource)).Count == 0)
+            {
+                CreateResourceCluster(2, 150, new Vector2(150, 150));
+                CreateResourceCluster(2, 150, new Vector2(Game1.ScreenBounds.Width - 150, 150));
+                CreateResourceCluster(2, 150, new Vector2(150, Game1.ScreenBounds.Height - 150));
+                CreateResourceCluster(2, 150, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
+                CreateResourceCluster(2, 150, new Vector2((Game1.ScreenBounds.Width - 150) / 2, (Game1.ScreenBounds.Height - 150) / 2));
+            }
         }
 
         public List<Entity> CreateResourceCluster(int amount, int rad, Vector2 point)
