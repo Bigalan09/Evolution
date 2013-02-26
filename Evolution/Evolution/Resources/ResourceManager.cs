@@ -35,15 +35,17 @@ namespace Evolution.Resources
             {
                 float x = resource.Position.X + Randomiser.nextInt(-25, 25);
                 float y = resource.Position.Y + Randomiser.nextInt(-25, 25);
-                while (Game1.ScreenBounds.Contains((int)x, (int)y))
+                if (!Game1.ScreenBounds.Contains((int)x, (int)y))
                 {
-                    x = resource.Position.X + Randomiser.nextInt(-25, 25);
-                    y = resource.Position.Y + Randomiser.nextInt(-25, 25);
+                    addResource(resource);
                 }
+                else
+                {
 
-                Resource res = new Resource(this, x, y, resource.Texture);
-                res.LoadContent(gameWorld.GameRef.Content);
-                gameWorld.EntityManager.AddEntity(res);
+                    Resource res = new Resource(this, x, y, resource.Texture);
+                    res.LoadContent(gameWorld.GameRef.Content);
+                    gameWorld.EntityManager.AddEntity(res);
+                }
             }
         }
 
