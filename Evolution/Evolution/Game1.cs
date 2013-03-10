@@ -147,10 +147,10 @@ namespace Evolution
             spriteBatch.Begin();
             world.Draw(spriteBatch, gameTime);
             spriteBatch.Draw(gui, new Vector2(5, 5), Color.White);
-            spriteBatch.DrawString(font, "Herbivore: " + world.EntityManager.GetAll(typeof(Herbivore)).Count, new Vector2(25, 25), new Color(255, 5, 5, 255));
-            spriteBatch.DrawString(font, "Carnivore: " + world.EntityManager.GetAll(typeof(Carnivore)).Count, new Vector2(25, 50), new Color(15, 15, 15, 255));
-            spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(25, 75), new Color(25, 75, 255, 255));
-            spriteBatch.DrawString(font, "Plants: " + world.EntityManager.GetAll(typeof(Resource)).Count, new Vector2(25, 100), new Color(255, 255, 5, 255));
+            spriteBatch.DrawString(font, "Herbivore: " + world.EntityManager.GetAll(typeof(Herbivore)).Count, new Vector2(25, 25), new Color(205, 55, 45, 255));
+            spriteBatch.DrawString(font, "Carnivore: " + world.EntityManager.GetAll(typeof(Carnivore)).Count, new Vector2(25, 50), new Color(60, 80, 60, 225));
+            spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(25, 75), Color.SteelBlue);
+            spriteBatch.DrawString(font, "Plants: " + world.EntityManager.GetAll(typeof(Resource)).Count, new Vector2(25, 100), Color.Yellow);
             spriteBatch.DrawString(font, "Crossover: " + Parameters.Crossover, new Vector2(25, 125), Color.White);
             spriteBatch.End();
 
