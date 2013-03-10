@@ -69,6 +69,22 @@ namespace Evolution.Creatures
             gameWorld.EntityManager.AddEntity(creature);
         }
 
+        public void addCreature(float x, float y, Chromosome chromosome = null, float energy = 50)
+        {
+            Creature creature = null;
+            if (type == CreatureType.Carnivore)
+                creature = new Carnivore(this, x, y, chromosome);
+            else if (type == CreatureType.Herbivore)
+                creature = new Herbivore(this, x, y, chromosome);
+            else
+                creature = new Omnivore(this, x, y, chromosome);
+
+            creature.Energy = energy;
+
+            creatures.Add(creature);
+            gameWorld.EntityManager.AddEntity(creature);
+        }
+
         public void addCreature(Creature creature)
         {
             if (!creatures.Contains(creature))
@@ -97,7 +113,7 @@ namespace Evolution.Creatures
                 double radius = Math.Sqrt(Randomiser.nextDouble()) * 100;
                 float x = (float)(spawnPoint.X + radius * Math.Cos(angle));
                 float y = (float)(spawnPoint.Y + radius * Math.Sin(angle));
-                addCreature(x, y);
+                addCreature(x, y, null);
             }
 
             return creatures;

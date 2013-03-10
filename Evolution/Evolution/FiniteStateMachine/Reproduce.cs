@@ -41,7 +41,7 @@ namespace Evolution.FiniteStateMachine
                     {
                         childrenChromosomes[0].Mutate();
                     }
-                    c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[0]);
+                    c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[0], ((partner.Energy + c.Energy) / 2));
                     if (Randomiser.nextDouble() < 0.5)
                     {
                         if (Randomiser.nextDouble() < Game1.Parameters.Mutation)
@@ -50,8 +50,8 @@ namespace Evolution.FiniteStateMachine
                         }
                         c.Group.addCreature(c.Position.X, c.Position.Y, childrenChromosomes[1]);
                     }
-                    c.Energy -= 20;
-                    partner.Energy -= 20;
+                    c.Energy = (c.Energy / 2) - 5;
+                    partner.Energy = (partner.Energy / 2) - 5;
                 }
                 c.FSM.ChangeState(new Wander());
                 partner.FSM.ChangeState(new Wander());
