@@ -53,13 +53,13 @@ namespace Evolution.Resources
         {
             resource.Alive = false;
             gameWorld.EntityManager.RemoveEntity(resource);
-            if (gameWorld.EntityManager.GetAll(typeof(Resource)).Count == 0)
+            if (gameWorld.EntityManager.GetAll(typeof(Resource)).Count <= 3)
             {
-                CreateResourceCluster(2, 150, new Vector2(150, 150));
-                CreateResourceCluster(2, 150, new Vector2(Game1.ScreenBounds.Width - 150, 150));
-                CreateResourceCluster(2, 150, new Vector2(150, Game1.ScreenBounds.Height - 150));
-                CreateResourceCluster(2, 150, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
-                CreateResourceCluster(2, 150, new Vector2((Game1.ScreenBounds.Width - 150) / 2, (Game1.ScreenBounds.Height - 150) / 2));
+                CreateResourceCluster(5, 150, new Vector2(150, 150));
+                CreateResourceCluster(5, 150, new Vector2(Game1.ScreenBounds.Width - 150, 150));
+                CreateResourceCluster(5, 150, new Vector2(150, Game1.ScreenBounds.Height - 150));
+                CreateResourceCluster(5, 150, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
+                CreateResourceCluster(5, 150, new Vector2((Game1.ScreenBounds.Width - 150) / 2, (Game1.ScreenBounds.Height - 150) / 2));
             }
         }
 

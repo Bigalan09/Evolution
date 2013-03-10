@@ -48,6 +48,7 @@ namespace Evolution
         public static Dictionary<string, ParticleEffect> particleEffects = new Dictionary<string, ParticleEffect>(StringComparer.Ordinal);
         Renderer particleRenderer;
         public static Params Parameters;
+        private Texture2D gui;
 
         public Game1()
         {
@@ -89,6 +90,8 @@ namespace Evolution
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("arial");
+
+            gui = Content.Load<Texture2D>("gui");
 
             ArrayList modified = new ArrayList();
 
@@ -143,10 +146,12 @@ namespace Evolution
 
             spriteBatch.Begin();
             world.Draw(spriteBatch, gameTime);
-            spriteBatch.DrawString(font, "Herbivore: " + world.EntityManager.GetAll(typeof(Herbivore)).Count, new Vector2(10, 5), Color.White);
-            spriteBatch.DrawString(font, "Carnivore: " + world.EntityManager.GetAll(typeof(Carnivore)).Count, new Vector2(10, 30), Color.White);
-            spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(10, 55), Color.White);
-            spriteBatch.DrawString(font, "Crossover: " + Parameters.Crossover, new Vector2(10, 80), Color.White);
+            spriteBatch.Draw(gui, new Vector2(5, 5), Color.White);
+            spriteBatch.DrawString(font, "Herbivore: " + world.EntityManager.GetAll(typeof(Herbivore)).Count, new Vector2(25, 25), new Color(255, 5, 5, 255));
+            spriteBatch.DrawString(font, "Carnivore: " + world.EntityManager.GetAll(typeof(Carnivore)).Count, new Vector2(25, 50), new Color(15, 15, 15, 255));
+            spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(25, 75), new Color(25, 75, 255, 255));
+            spriteBatch.DrawString(font, "Plants: " + world.EntityManager.GetAll(typeof(Resource)).Count, new Vector2(25, 100), new Color(255, 255, 5, 255));
+            spriteBatch.DrawString(font, "Crossover: " + Parameters.Crossover, new Vector2(25, 125), Color.White);
             spriteBatch.End();
 
             foreach (KeyValuePair<string, ParticleEffect> particle in particleEffects)

@@ -48,15 +48,15 @@ namespace Evolution
             OmnivoreGroup = new CreatureGroup(CreatureType.Omnivore, this);
 
             // Create entities
-            resourceManager.CreateResourceCluster(5, 150, new Vector2(150, 150));
-            resourceManager.CreateResourceCluster(5, 150, new Vector2(Game1.ScreenBounds.Width - 150, 150));
-            resourceManager.CreateResourceCluster(5, 150, new Vector2(150, Game1.ScreenBounds.Height - 150));
-            resourceManager.CreateResourceCluster(5, 150, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
-            resourceManager.CreateResourceCluster(5, 150, new Vector2((Game1.ScreenBounds.Width - 150) / 2, (Game1.ScreenBounds.Height - 150) / 2));
+            resourceManager.CreateResourceCluster(15, 150, new Vector2(150, 150));
+            resourceManager.CreateResourceCluster(15, 150, new Vector2(Game1.ScreenBounds.Width - 150, 150));
+            resourceManager.CreateResourceCluster(15, 150, new Vector2(150, Game1.ScreenBounds.Height - 150));
+            resourceManager.CreateResourceCluster(15, 150, new Vector2(Game1.ScreenBounds.Width - 150, Game1.ScreenBounds.Height - 150));
+            resourceManager.CreateResourceCluster(15, 150, new Vector2((Game1.ScreenBounds.Width - 150) / 2, (Game1.ScreenBounds.Height - 150) / 2));
 
-            HerbivoreGroup.CreatePopulation(20);
-            CarnivoreGroup.CreatePopulation(20);
-            OmnivoreGroup.CreatePopulation(20);
+            HerbivoreGroup.CreatePopulation(50);
+            CarnivoreGroup.CreatePopulation(50);
+            OmnivoreGroup.CreatePopulation(50);
 
             entityManager.LoadContent(gameRef.Content);
 
