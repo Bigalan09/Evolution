@@ -29,7 +29,10 @@ namespace Evolution.FiniteStateMachine
                 float amount = Math.Min(0, (c.Carrying - (100 - c.Energy)));
                 c.Carrying -= (int)amount;
                 c.Energy += amount;
-
+                if (c.Energy >= 100 || c.Carrying <= 5)
+                {
+                    c.FSM.ChangeState(new Wander());
+                }
             }
             else
             {
