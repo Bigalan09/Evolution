@@ -26,11 +26,20 @@ namespace Evolution.FiniteStateMachine
         {
             // Seek food position then check bounding radius
             Creature c = (Creature)ent;
-            c.Steering_Force += c.SteeringBehaviour.Seek(this.resource.Position - this.resource.Origin);
+            if (resource is Vehicle)
+            {
+                c.Steering_Force += c.SteeringBehaviour.Pursuit((Vehicle)resource);
+                c.Steering_Force += c.SteeringBehaviour.Arrive(this.resource.Position);
+            }
+            else
+            {
+                c.Steering_Force += c.SteeringBehaviour.Arrive(this.resource.Position);
+            }
 
-
-            if ((c.Position + c.Origin - resource.Position + resource.Origin).Length() < 10)
+            if ((c.Position + c.Origin - resource.Position + resource.Origin).Length() < 10) {
                 c.Velocity = Vector2.Zero;
+                c.Steering_Force = Vector2.Zero;
+            }
 
             if ((resource is Resource) && ((Resource)resource).Amount < 1)
                 c.FSM.ChangeState(new Wander());

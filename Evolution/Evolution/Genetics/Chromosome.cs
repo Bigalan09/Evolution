@@ -69,9 +69,9 @@ namespace Evolution.Genetics
                 Gather_Rate,
                 Sight_Radius
              */
-            addGene(PropertyType.Max_Speed, Randomiser.nextInt(0, 100));
-            addGene(PropertyType.Strength, Randomiser.nextInt(0, 100));
-            addGene(PropertyType.Defence, Randomiser.nextInt(0, 100));
+            addGene(PropertyType.Max_Speed, Randomiser.nextInt(1, 100));
+            addGene(PropertyType.Strength, Randomiser.nextInt(1, 100));
+            addGene(PropertyType.Defence, Randomiser.nextInt(1, 100));
             addGene(PropertyType.Age_Death, Randomiser.nextInt(40, 120));
             addGene(PropertyType.Sight_Radius, Randomiser.nextInt(10, 100));
             addGene(PropertyType.Gather_Rate, Randomiser.nextInt(1, 10));

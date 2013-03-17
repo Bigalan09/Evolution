@@ -42,9 +42,9 @@ namespace Evolution.Resources
 
         private void Initialiser()
         {
-            reg = new Regulator(Randomiser.nextInt(10, 20), 0);
+            reg = new Regulator(Randomiser.nextInt(5, 15), 0);
             regAge = new Regulator(Randomiser.nextInt(2, 5), 0);
-            max_age = Randomiser.nextInt(5, 16);
+            max_age = Randomiser.nextInt(10, 25);
         }
 
         public override void LoadContent(ContentManager content)

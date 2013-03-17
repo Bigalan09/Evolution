@@ -128,9 +128,7 @@ namespace Evolution.Creatures
             this.Sight = (int)chromosome.GetGene(PropertyType.Sight_Radius).Value;
             this.GatherRate = (int)chromosome.GetGene(PropertyType.Gather_Rate).Value;
 
-            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 100;
-            Console.WriteLine("SPEED: " + this.Max_Speed);
-
+            this.Max_Speed = (1 / Mass * 2) + 0.5f;
         }
 
         public override void LoadContent(ContentManager content)
