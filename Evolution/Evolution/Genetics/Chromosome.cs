@@ -73,7 +73,7 @@ namespace Evolution.Genetics
             addGene(PropertyType.Strength, Randomiser.nextInt(1, 100));
             addGene(PropertyType.Defence, Randomiser.nextInt(1, 100));
             addGene(PropertyType.Age_Death, Randomiser.nextInt(40, 120));
-            addGene(PropertyType.Sight_Radius, Randomiser.nextInt(10, 100));
+            addGene(PropertyType.Sight_Radius, Randomiser.nextInt(20, 120));
             addGene(PropertyType.Gather_Rate, Randomiser.nextInt(1, 10));
             addGene(PropertyType.Resource_Capacity, Randomiser.nextInt(10, 100));
         }

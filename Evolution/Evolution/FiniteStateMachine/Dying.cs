@@ -21,13 +21,8 @@ namespace Evolution.FiniteStateMachine
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-            c.To = c.SteeringBehaviour.Wander();
-
-            Vector2 steering_direction = c.SteeringBehaviour.Seek(c.To);
-            Vector2 steering_force = truncate(steering_direction, c.Max_Force);
-            Vector2 acceleration = steering_force / c.Mass;
-            c.Velocity = truncate(c.Velocity + acceleration, 0.01f);
-            c.Position = c.Position + c.Velocity;
+            c.Max_Speed /= 1.02f;
+            c.Steering_Force = c.SteeringBehaviour.Wander();
 
             c.Health --;
             if (c.Health <= 0)

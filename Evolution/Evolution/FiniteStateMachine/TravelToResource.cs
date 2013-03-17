@@ -36,22 +36,22 @@ namespace Evolution.FiniteStateMachine
                 c.Steering_Force += c.SteeringBehaviour.Arrive(this.resource.Position);
             }
 
-            if ((c.Position + c.Origin - resource.Position + resource.Origin).Length() < 10) {
-                c.Velocity = Vector2.Zero;
+            if ((c.Position + c.Origin - resource.Position).Length() < 15) {
+                //c.Velocity = Vector2.Zero;
                 c.Steering_Force = Vector2.Zero;
             }
 
             if ((resource is Resource) && ((Resource)resource).Amount < 1)
                 c.FSM.ChangeState(new Wander());
 
-            if ((c.Position + c.Origin - resource.Position + resource.Origin).Length() >= c.Sight || !resource.Alive || resource == null)
+            if ((c.Position + c.Origin - resource.Position).Length() > c.Sight || !resource.Alive || resource == null)
             {
                 c.FSM.ChangeState(new Wander());
                 return;
             }
             else
             {
-                if ((c.Position + c.Origin - resource.Position).Length() <= 10)
+                if ((c.Position + c.Origin - resource.Position).Length() <= 15)
                 {
                     c.FSM.ChangeState(new EatFood());
                 }
@@ -63,12 +63,5 @@ namespace Evolution.FiniteStateMachine
             Creature c = (Creature)ent;
         }
 
-        private Vector2 truncate(Vector2 v, float max_value)
-        {
-            float s = 0f;
-            s = max_value / v.Length();
-            s = (s < 1.0f) ? 1.0f : s;
-            return new Vector2(v.X * s, v.Y * s);
-        }
     }
 }

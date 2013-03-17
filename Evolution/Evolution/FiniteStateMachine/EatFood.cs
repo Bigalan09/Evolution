@@ -23,7 +23,7 @@ namespace Evolution.FiniteStateMachine
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-            if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) == null)
+            if (c.Group.GameWorld.EntityManager.ResourceInRadius(15, c) == null)
             {
                 c.FSM.ChangeState(new Wander());
                 return;
@@ -43,9 +43,9 @@ namespace Evolution.FiniteStateMachine
 
                 if (c is Herbivore)
                 {
-                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) != null)
+                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(15, c) != null)
                     {
-                        Resource r = (Resource) c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
+                        Resource r = (Resource) c.Group.GameWorld.EntityManager.ResourceInRadius(15, c);
                         r.Amount--;
                         c.Energy++;
                         if (c.Energy >= 100)
@@ -60,20 +60,20 @@ namespace Evolution.FiniteStateMachine
                 }
                 else if (c is Carnivore)
                 {
-                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) != null)
+                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(15, c) != null)
                     {
-                        Creature enemy = (Creature)c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
+                        Creature enemy = (Creature)c.Group.GameWorld.EntityManager.ResourceInRadius(15, c);
                         enemy.FSM.ChangeState(new FightCreature(c));
                         c.FSM.ChangeState(new FightCreature(enemy));
                     }
                 }
                 else if (c is Omnivore)
                 {
-                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) != null)
+                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(15, c) != null)
                     {
-                        if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) is Resource)
+                        if (c.Group.GameWorld.EntityManager.ResourceInRadius(15, c) is Resource)
                         {
-                            Resource r = (Resource) c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
+                            Resource r = (Resource) c.Group.GameWorld.EntityManager.ResourceInRadius(15, c);
                             r.Amount--;
                             c.Energy++;
                             if (c.Energy >= 100)
@@ -86,7 +86,7 @@ namespace Evolution.FiniteStateMachine
                         }
                         else
                         {
-                            Creature enemy = (Creature)c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
+                            Creature enemy = (Creature)c.Group.GameWorld.EntityManager.ResourceInRadius(15, c);
                             enemy.FSM.ChangeState(new FightCreature(c));
                             c.FSM.ChangeState(new FightCreature(enemy));
                         }
