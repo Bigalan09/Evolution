@@ -29,7 +29,7 @@ namespace Evolution.Creatures
 
         public Vector2 Flee(Vector2 targetPos)
         {
-            Vector2 desiredVelocity = Vector2.Normalize(vehicle.Position - targetPos) * vehicle.Max_Speed;
+            Vector2 desiredVelocity = Vector2.Normalize(vehicle.Position + targetPos) * vehicle.Max_Speed;
             return (desiredVelocity - vehicle.Velocity);
         }
 
@@ -40,6 +40,20 @@ namespace Evolution.Creatures
                 return Flee(targetPos);
             }
             return Vector2.Zero;
+        }
+
+        public Vector2 Arrive(Vector2 targetPos)
+        {
+            Vector2 toTarget = Vector2.Subtract(targetPos, vehicle.Position + vehicle.Origin);
+            double distance = toTarget.Length();
+            if (distance > 1)
+            {
+                double speed = vehicle.Max_Speed * (distance / 2);
+                speed = Math.Min(speed, vehicle.Max_Speed);
+                Vector2 desired_V = toTarget * (float)(speed / distance);
+                return Vector2.Subtract(desired_V, vehicle.Velocity);
+            }
+            return new Vector2(0, 0);
         }
 
         public Vector2 Wander()

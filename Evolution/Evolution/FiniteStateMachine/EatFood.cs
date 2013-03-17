@@ -23,7 +23,11 @@ namespace Evolution.FiniteStateMachine
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-
+            if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) == null)
+            {
+                c.FSM.ChangeState(new Wander());
+                return;
+            }
             if (c.Carrying >= 5)
             {
                 float amount = Math.Min(0, (c.Carrying - (100 - c.Energy)));
@@ -39,15 +43,15 @@ namespace Evolution.FiniteStateMachine
 
                 if (c is Herbivore)
                 {
-                    if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)).Count > 0)
+                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) != null)
                     {
-                        Resource r = (Resource)c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource))[0];
+                        Resource r = (Resource) c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
                         r.Amount--;
                         c.Energy++;
                         if (c.Energy >= 100)
                             c.Carrying++;
 
-                        if (r.Amount <= 0)
+                        if (r.Amount <= 0 || !r.Alive || r != null || c.Carrying >= c.CarryingCapacity)
                         {
                             r.Alive = false;
                             c.FSM.ChangeState(new Wander());
@@ -56,39 +60,33 @@ namespace Evolution.FiniteStateMachine
                 }
                 else if (c is Carnivore)
                 {
-                    if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore)).Count > 0 || c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Omnivore)).Count > 0)
+                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) != null)
                     {
-                        List<Entity> enemyList = c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore));
-                        enemyList.AddRange(c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Omnivore)));
-                        Creature enemy = (Creature)enemyList[0];
-
+                        Creature enemy = (Creature)c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
                         enemy.FSM.ChangeState(new FightCreature(c));
                         c.FSM.ChangeState(new FightCreature(enemy));
                     }
                 }
                 else if (c is Omnivore)
                 {
-                    if (c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore)).Count > 0 || c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Carnivore)).Count > 0 || c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)).Count > 0)
+                    if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) != null)
                     {
-                        List<Entity> foodList = c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore));
-                        foodList.AddRange(c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Carnivore)));
-                        foodList.AddRange(c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Resource)));
-                        if (foodList[0] is Resource)
+                        if (c.Group.GameWorld.EntityManager.ResourceInRadius(10, c) is Resource)
                         {
-                            Resource r = (Resource)foodList[0];
+                            Resource r = (Resource) c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
                             r.Amount--;
                             c.Energy++;
                             if (c.Energy >= 100)
                                 c.Carrying++;
-                            if (r.Amount <= 0)
+                            if (r.Amount <= 0 || !r.Alive || r != null || c.Carrying >= c.CarryingCapacity)
                             {
-                                r.Alive = false;
+                                //r.Alive = false;
                                 c.FSM.ChangeState(new Wander());
                             }
                         }
                         else
                         {
-                            Creature enemy = (Creature)foodList[0];
+                            Creature enemy = (Creature)c.Group.GameWorld.EntityManager.ResourceInRadius(10, c);
                             enemy.FSM.ChangeState(new FightCreature(c));
                             c.FSM.ChangeState(new FightCreature(enemy));
                         }

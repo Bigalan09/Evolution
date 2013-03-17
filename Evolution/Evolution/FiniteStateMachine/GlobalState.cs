@@ -41,20 +41,21 @@ namespace Evolution.FiniteStateMachine
                 {
                     if (!c.FSM.IsInState(typeof(EatFood)))
                     {
-                        c.Energy -= c.Speed;
+                        float energy = (c.Speed * 2) + (c.Carrying / 100);
+                        c.Energy -= energy;
                     }
-                    if ((!c.FSM.IsInState(typeof(EatFood))) && c.Energy <= 1)
+                    if ((!c.FSM.IsInState(typeof(EatFood))) && c.Energy < 1)
                     {
                         c.FSM.ChangeState(new Dying());
                     }
-                    if (c.Energy > 35 && c.Age > 4 && !c.FSM.IsInState(typeof(Reproduce))) // need fitness function here
+                    if (c.Energy > 35 && c.Age > 4 && !c.FSM.IsInState(typeof(Reproduce)) && !c.FSM.IsInState(typeof(FightCreature))) // need fitness function here
                     {
                         List<Entity> partnerList = c.Group.GameWorld.EntityManager.InRadius(10, c.Position, c.GetType());
                         if (partnerList.Count > 0)
                         {
                             foreach (Creature partner in partnerList)
                             {
-                                if (partner.Energy > 35 && partner.Age > 4 && !partner.FSM.IsInState(typeof(Reproduce))) // need fitness function here
+                                if (partner.Energy > 35 && partner.Age > 4 && !partner.FSM.IsInState(typeof(Reproduce)) && !c.FSM.IsInState(typeof(FightCreature))) // need fitness function here
                                 {
                                     partner.FSM.ChangeState(new Reproduce(c));
                                     c.FSM.ChangeState(new Reproduce(partner));

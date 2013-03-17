@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using EvolutionLibrary;
 using Evolution.Genetics;
 using Evolution.Resources;
 using Evolution.Creatures;
@@ -55,11 +54,11 @@ namespace Evolution
             Content.RootDirectory = "Content";
 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 100;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 100;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - 10;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - 10;
             graphics.PreferMultiSampling = true;
             screenBounds = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             this.IsMouseVisible = true;
 
@@ -126,7 +125,17 @@ namespace Evolution
                 Exit();
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-                world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+            {
+                //world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
+                Entity ent = world.EntityManager.AtPosition(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
+                if (ent != null && ent is Creature) {
+                    Creature c = (Creature)ent;
+                    Console.WriteLine("State: " + c.FSM.CurrentState);
+                    Console.WriteLine("Age: " + c.Age);
+                    Console.WriteLine("Energy: " + c.Energy);
+                    Console.WriteLine("Storage: " + c.Carrying);
+                }
+            }
 
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
 

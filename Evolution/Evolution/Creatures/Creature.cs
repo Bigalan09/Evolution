@@ -14,7 +14,7 @@ namespace Evolution.Creatures
     class Creature : Vehicle
     {
         private Chromosome chromosome;
-        private float energy = 100f;
+        private float energy = 50f;
         private int age = 0;
         private int strength = 0;
         private int defence = 0;
@@ -22,7 +22,28 @@ namespace Evolution.Creatures
         private CreatureGroup group;
         private Vector2 memory = Vector2.Zero;
         private bool canReproduce = false;
-        private int carrying = 4;
+        private int carrying = 0;
+        private int carryingCapacity = 0;
+        private int sight = 0;
+        private int gatherRate = 0;
+
+        public int GatherRate
+        {
+            get { return gatherRate; }
+            set { gatherRate = value; }
+        }
+
+        public int Sight
+        {
+            get { return sight; }
+            set { sight = value; }
+        }
+
+        public int CarryingCapacity
+        {
+            get { return carryingCapacity; }
+            set { carryingCapacity = value; }
+        }
 
         public Chromosome Chromosome
         {
@@ -72,7 +93,7 @@ namespace Evolution.Creatures
         public int Carrying
         {
             get { return carrying; }
-            set { carrying = value; }
+            set { carrying = ((carrying + value) < CarryingCapacity) ? value : CarryingCapacity - Carrying; }
         }
 
         public bool CanReproduce
@@ -99,11 +120,14 @@ namespace Evolution.Creatures
 
         private void SetProperties()
         {
-            this.Mass = chromosome.GetGene(PropertyType.Body_Mass).Value * 10;
-            this.Max_Force = .1f;
-            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 100;
+            this.Mass = chromosome.GetGene(PropertyType.Defence).Value;
+            this.Max_Force = 0.01f;
+            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 150;
             this.strength = (int)chromosome.GetGene(PropertyType.Strength).Value;
             this.defence = (int)chromosome.GetGene(PropertyType.Defence).Value;
+            this.CarryingCapacity = (int)chromosome.GetGene(PropertyType.Resource_Capacity).Value;
+            this.Sight = (int)chromosome.GetGene(PropertyType.Sight_Radius).Value;
+            this.GatherRate = (int)chromosome.GetGene(PropertyType.Gather_Rate).Value;
         }
 
         public override void LoadContent(ContentManager content)

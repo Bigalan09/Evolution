@@ -39,7 +39,6 @@ namespace Evolution.FiniteStateMachine
 
         public void Exit(Entity ent)
         {
-            Game1.particleEffects["Death"].Trigger(ent.Position);
         }
 
         private Vector2 truncate(Vector2 v, float max_value)

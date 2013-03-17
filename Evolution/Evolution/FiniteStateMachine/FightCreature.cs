@@ -28,6 +28,12 @@ namespace Evolution.FiniteStateMachine
             Creature c = (Creature)ent;
             if (c.Alive && enemy.Alive)
             {
+                if ((c.Position + c.Origin - enemy.Position).Length() > c.Sight)
+                {
+                    enemy.FSM.ChangeState(new Wander());
+                    c.FSM.ChangeState(new Wander());
+                    return;
+                }
                 if (!enemy.FSM.IsInState(typeof(FightCreature)))
                     enemy.FSM.ChangeState(new FightCreature(c));
 
