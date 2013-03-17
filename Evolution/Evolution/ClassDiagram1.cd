@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="Evolution.Creatures.Carnivore">
+    <Position X="11.25" Y="23.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Creatures\Carnivore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.Creature">
+    <Position X="17" Y="16.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>QAQACMAAEAAAQhQAAEAEEAAEABBABAAAQgAAAgIAAA4=</HashCode>
+      <FileName>Creatures\Creature.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.CreatureGroup">
+    <Position X="52.25" Y="4.25" Width="5.75" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAAAAAAAAAAABACSQAQABIAAAAAAAEAAAQhA=</HashCode>
+      <FileName>Creatures\CreatureGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.Entity">
+    <Position X="14.5" Y="4.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>CARAAAAAAAAAggAgAAAAIAAABAAAAgQAAAICAAgAAgQ=</HashCode>
+      <FileName>Creatures\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.Herbivore">
+    <Position X="22.75" Y="23.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Creatures\Herbivore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.Omnivore">
+    <Position X="17" Y="23.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Creatures\Omnivore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.SteeringBehaviour">
+    <Position X="78.25" Y="4.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AACQAAAQAAAAAACACAAAAAAgAAAgAAQAAAAAAAAECAA=</HashCode>
+      <FileName>Creatures\SteeringBehaviour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Creatures.Vehicle">
+    <Position X="17.5" Y="9.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AIRgAABAAAEAggAAAAKQAAgBQAAIAQQAAIQAACSEEgA=</HashCode>
+      <FileName>Creatures\Vehicle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.EntityManager">
+    <Position X="91.25" Y="4.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAEAAAAgAAAAAhCAAAAwAAAQAAIoAAAAAAAAQ=</HashCode>
+      <FileName>EntityManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Game1">
+    <Position X="1" Y="23.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAEEBAAACAAwAAAAAAAAAAAAAAAAggAIBAAIAAAAQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.GameWorld">
+    <Position X="62.25" Y="4.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAgAAAgAAABCAEEAAABAAAAAAABAAAAAAAAQ=</HashCode>
+      <FileName>GameWorld.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Params">
+    <Position X="37" Y="4.25" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAQAAAEAEAAAAABAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Params.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Program" Collapsed="true">
+    <Position X="108.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.Dying" BaseTypeListCollapsed="true">
+    <Position X="67" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAFAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\Dying.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.EatFood" BaseTypeListCollapsed="true">
+    <Position X="83" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\EatFood.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.FightCreature" BaseTypeListCollapsed="true">
+    <Position X="42.75" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAIAAAAAAAAEAAAAIAAAAAAAAAI=</HashCode>
+      <FileName>FiniteStateMachine\FightCreature.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.GlobalState" BaseTypeListCollapsed="true">
+    <Position X="96.25" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAIAAAAAAAAEAAACIAAAAAAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\GlobalState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.Reproduce" BaseTypeListCollapsed="true">
+    <Position X="100.25" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAQAAAIAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\Reproduce.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.StateMachine">
+    <Position X="71" Y="4.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAJAAhAAAIAAAACABAAAIAAAACAAAAQAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\StateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.FiniteStateMachine.Wander" BaseTypeListCollapsed="true">
+    <Position X="104.25" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAFAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\Wander.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Evolution.Genetics.Chromosome">
+    <Position X="32.5" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>QEAABAAAAQAAEAAAAAAAAgAAAQAAAAAACAAAAACAAAA=</HashCode>
+      <FileName>Genetics\Chromosome.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Genetics.Gene">
+    <Position X="28.5" Y="4.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAARAAAAAEAAAAAAAAAQABACAACQAgAAAAAAA=</HashCode>
+      <FileName>Genetics\Gene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Resources.Resource">
+    <Position X="5.5" Y="9.25" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAACAQgAAAAIAAACAAAAAiAAAAAAAAgAABAQ=</HashCode>
+      <FileName>Resources\Resource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Resources.ResourceManager">
+    <Position X="46.75" Y="4.25" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAgAAAAAQAAAAAAAAAAAAIAAAQ=</HashCode>
+      <FileName>Resources\ResourceManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Utils.Randomiser">
+    <Position X="74.75" Y="4.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAQAAAAAABAAAAAAADAABAAAAAQAAIAAAAAAA=</HashCode>
+      <FileName>Utils\Randomiser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Utils.Regulator">
+    <Position X="87" Y="4.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAIAAAAAAAAAAAAACACgAAAAAAAAA=</HashCode>
+      <FileName>Utils\Regulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Evolution.Utils.Serialiser">
+    <Position X="58.75" Y="4.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAEBAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\Serialiser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object">
+    <Position X="54.75" Y="0.5" Width="3.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.Xna.Framework.Game">
+    <Position X="0.5" Y="14.5" Width="4.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Evolution.FiniteStateMachine.State" Collapsed="true">
+    <Position X="108.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>FiniteStateMachine\State.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Evolution.Creatures.CreatureType" Collapsed="true">
+    <Position X="108.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Creatures\CreatureGroup.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Evolution.Genetics.PropertyType" Collapsed="true">
+    <Position X="110.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAQAAIAAAAQAAAAAARAAAAAAAAAAgAAEAA=</HashCode>
+      <FileName>Genetics\Chromosome.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
