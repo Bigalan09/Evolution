@@ -22,15 +22,8 @@ namespace Evolution.FiniteStateMachine
         public void Execute(Entity ent, GameTime gameTime)
         {
             Creature c = (Creature)ent;
-
-            c.To = c.SteeringBehaviour.Wander();
-
-            Vector2 steering_direction = c.SteeringBehaviour.Seek(c.To);
-            Vector2 steering_force = truncate(steering_direction, c.Max_Force);
-            Vector2 acceleration = steering_force / c.Mass;
-            c.Velocity = truncate(c.Velocity + acceleration, c.Speed);
-            c.Position = c.Position + c.Velocity;
-
+            c.Steering_Force = Vector2.Zero;
+            c.Steering_Force += c.SteeringBehaviour.Wander();
 
             if (c.Energy < 90 && !c.FSM.IsInState(typeof(EatFood)))
             {

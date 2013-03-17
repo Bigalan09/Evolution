@@ -1,4 +1,5 @@
 ﻿using Evolution.Creatures;
+using Evolution.Resources;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -118,6 +119,46 @@ namespace Evolution
                 if (entities[i].GetType().Equals(type))
                     entities.RemoveAt(i);
             }
+        }
+
+        public Entity ResourceInRadius(float radius, Creature c)
+        {
+            foreach (Entity ent in entities)
+            {
+                if ((ent.Position + ent.Origin - (c.Position + c.Origin)).Length() <= radius)
+                {
+                    if (c is Herbivore)
+                    {
+                        if (ent is Resource)
+                            return ent;
+                    }
+                    else if (c is Carnivore)
+                    {
+                        if (ent is Herbivore || ent is Omnivore)
+                            return ent;
+                    }
+                    else if (c is Omnivore)
+                    {
+                        if (ent is Herbivore || ent is Carnivore || ent is Resource)
+                            return ent;
+                    }
+                }
+            }
+
+
+            return null;
+        }
+
+        public Entity AtPosition(Vector2 position)
+        {
+            foreach (Entity ent in entities)
+            {
+                if ((ent.Position + ent.Origin - position).Length() <= 15)
+                {
+                    return ent;
+                }
+            }
+            return null;
         }
 
         public List<Entity> InRadius(float radius, Vector2 position)

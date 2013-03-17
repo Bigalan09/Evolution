@@ -121,13 +121,16 @@ namespace Evolution.Creatures
         private void SetProperties()
         {
             this.Mass = chromosome.GetGene(PropertyType.Defence).Value;
-            this.Max_Force = 0.01f;
-            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 150;
+            this.Max_Force = 0.6f;
             this.strength = (int)chromosome.GetGene(PropertyType.Strength).Value;
             this.defence = (int)chromosome.GetGene(PropertyType.Defence).Value;
             this.CarryingCapacity = (int)chromosome.GetGene(PropertyType.Resource_Capacity).Value;
             this.Sight = (int)chromosome.GetGene(PropertyType.Sight_Radius).Value;
             this.GatherRate = (int)chromosome.GetGene(PropertyType.Gather_Rate).Value;
+
+            this.Max_Speed = chromosome.GetGene(PropertyType.Max_Speed).Value / 100;
+            Console.WriteLine("SPEED: " + this.Max_Speed);
+
         }
 
         public override void LoadContent(ContentManager content)

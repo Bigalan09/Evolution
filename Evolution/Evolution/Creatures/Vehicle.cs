@@ -84,37 +84,34 @@ namespace Evolution.Creatures
         {
             steeringBehaviour = new SteeringBehaviour(this);
             steering_force = Vector2.Zero;
+            Velocity = new Vector2(0.001f, 0.001f);
             fsm = new StateMachine(this);
             fsm.ChangeState(new Wander());
             fsm.ChangeGlobalState(new GlobalState());
-
         }
 
         public override void Update(GameTime gameTime)
         {
-            Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
-
-            if (!RotateToFacePosition())
-                return;
-
             fsm.Update(gameTime);
+
+            Steering_Force = SteeringBehaviour.Truncate(Steering_Force, Max_Force);
+            Steering_Force = Steering_Force * (1 / Mass);
+
+            Velocity = SteeringBehaviour.Truncate(Velocity + Steering_Force, Max_Speed);
+            Position = Position + Velocity;
+
             if (Velocity.LengthSquared() > 0.00000001)
             {
                 Heading = new Vector2((float)Math.Cos(rotation),
                                         (float)Math.Sin(rotation));
                 Side = new Vector2(-Heading.Y, Heading.X);
             }
+
+            rotation = SteeringBehaviour.getAngle(Velocity);
             Wrap();
-            speed = (1 / mass * 1f);
+            //speed = (1 / mass * 1f);
             rec = new Rectangle((int)Position.X, (int)Position.Y, (int)(Texture.Width + Mass / 10), (int)(Texture.Height + Mass / 10));
             base.Update(gameTime);
-        }
-
-        private bool RotateToFacePosition()
-        {
-            Vector2 direction = Position - To;
-            rotation = (float)(Math.Atan2(direction.Y, direction.X) + MathHelper.PiOver2) + 1.57079633f;
-            return true;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

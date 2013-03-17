@@ -9,79 +9,106 @@ namespace Evolution.Creatures
 {
     class SteeringBehaviour
     {
-        private Vehicle vehicle;
+        private Vehicle entity;
+        private float slowingRadius = 150;
+        private float CIRCLE_DISTANCE = 500f;
+        private float CIRCLE_RADIUS = 100f;
+        private float ANGLE_CHANGE = 1f;
+        public float wanderAngle = 0;
 
-        private float wanderAngle = 0.1f;
-        private float wanderJitter = 0.05f;
-        private float wanderDistance = 10f;
-        private float wanderRadius = 20f;
-
-        public SteeringBehaviour(Vehicle veh)
+        private Vehicle Entity
         {
-            vehicle = veh;
+            get { return entity; }
+            set { entity = value; }
         }
 
-        public Vector2 Seek(Vector2 targetPos)
+        public SteeringBehaviour(Vehicle entity)
         {
-            Vector2 desiredVelocity = Vector2.Normalize(targetPos - vehicle.Position) * vehicle.Max_Speed;
-            return (desiredVelocity - vehicle.Velocity);
+            Entity = entity;
         }
 
-        public Vector2 Flee(Vector2 targetPos)
+        public Vector2 Seek(Vector2 target)
         {
-            Vector2 desiredVelocity = Vector2.Normalize(vehicle.Position + targetPos) * vehicle.Max_Speed;
-            return (desiredVelocity - vehicle.Velocity);
+            Vector2 desiredVelocity = Vector2.Normalize(target - entity.Position) * Entity.Max_Speed;
+            return (desiredVelocity - Entity.Velocity);
         }
 
-        public Vector2 FleeWithinRadius(Vector2 targetPos, float radius)
+        public Vector2 Flee(Vector2 target)
         {
-            if (Vector2.DistanceSquared(vehicle.Position, targetPos) > radius)
+            Vector2 desiredVelocity = Vector2.Normalize(entity.Position - target) * Entity.Max_Speed;
+            return (desiredVelocity - Entity.Velocity);
+        }
+
+        public Vector2 Pursuit(Vehicle target)
+        {
+            Vector2 distance = target.Position - Entity.Position;
+            int T = (int)(distance.Length() / Entity.Max_Speed);
+            Vector2 futurePosition = target.Position + target.Velocity * T;
+            return Seek(futurePosition);
+        }
+
+        public Vector2 Evade(Vehicle target)
+        {
+            Vector2 distance = target.Position - Entity.Position;
+            int T = (int)(distance.Length() / Entity.Max_Speed);
+            Vector2 futurePosition = target.Position + target.Velocity * T;
+            return Flee(futurePosition);
+        }
+
+        public Vector2 Arrive(Vector2 target)
+        {
+            Vector2 desiredVelocity = (target - Entity.Position);
+            desiredVelocity.Normalize();
+            float distance = Vector2.Distance(target, Entity.Position);
+            if (distance > slowingRadius)
             {
-                return Flee(targetPos);
+                desiredVelocity = desiredVelocity * Entity.Max_Speed;
             }
-            return Vector2.Zero;
-        }
-
-        public Vector2 Arrive(Vector2 targetPos)
-        {
-            Vector2 toTarget = Vector2.Subtract(targetPos, vehicle.Position + vehicle.Origin);
-            double distance = toTarget.Length();
-            if (distance > 1)
+            else
             {
-                double speed = vehicle.Max_Speed * (distance / 2);
-                speed = Math.Min(speed, vehicle.Max_Speed);
-                Vector2 desired_V = toTarget * (float)(speed / distance);
-                return Vector2.Subtract(desired_V, vehicle.Velocity);
+                desiredVelocity = desiredVelocity * Entity.Max_Speed * (distance / slowingRadius);
             }
-            return new Vector2(0, 0);
+
+            return (desiredVelocity - Entity.Velocity);
         }
 
         public Vector2 Wander()
         {
-            wanderAngle += RandomClamped() * wanderJitter;
+            Vector2 circleCenter = Entity.Velocity;
+            circleCenter.Normalize();
+            circleCenter = circleCenter * (CIRCLE_DISTANCE);
 
-            Vector2 circlePosition = vehicle.Position + (vehicle.Velocity * wanderDistance);
-            float x = (float)Math.Cos(wanderAngle);
-            float y = (float)Math.Sin(wanderAngle);
-            Vector2 circleTarget = new Vector2(x, y) * wanderRadius;
-            return circlePosition + circleTarget;
+            Vector2 displacement = new Vector2(0, -1);
+            displacement = displacement * (CIRCLE_RADIUS);
+            displacement = setAngle(displacement, wanderAngle);
+
+            wanderAngle += (float)(Randomiser.nextDouble() * ANGLE_CHANGE - ANGLE_CHANGE * .5);
+
+            return (circleCenter + displacement);
         }
 
-        public static float RandomClamped()
+        public Vector2 Truncate(Vector2 original, float max)
         {
-            return (float)(Randomiser.nextDouble() - Randomiser.nextDouble());
+            if (original.Length() > max)
+            {
+                original.Normalize();
+
+                original *= max;
+            }
+            return original;
         }
-        /*
-            wanderAngle += RandomClamped() * wanderJitter;
 
-            Vector2 circlePosition = Position + (Velocity * wanderDistance);
-            float x = (float)Math.Cos(wanderAngle);
-            float y = (float)Math.Sin(wanderAngle);
-            Vector2 circleTarget = new Vector2(x, y) * wanderRadius;
-            to = circlePosition + circleTarget;
+        public Vector2 setAngle(Vector2 original, float value)
+        {
+            float len = original.Length();
+            original.X = (float)(Math.Cos(value) * len);
+            original.Y = (float)(Math.Sin(value) * len);
+            return original;
+        }
 
-            if (!RotateToFacePosition())
-                return;
-        */
+        public float getAngle(Vector2 original)
+        {
+            return (float)Math.Atan2(original.Y, original.X);
+        }
     }
 }

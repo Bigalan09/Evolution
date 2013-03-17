@@ -101,6 +101,7 @@
     <Compile Include="FiniteStateMachine\FightCreature.cs" />
     <Compile Include="FiniteStateMachine\GlobalState.cs" />
     <Compile Include="FiniteStateMachine\Reproduce.cs" />
+    <Compile Include="FiniteStateMachine\TravelToResource.cs" />
     <Compile Include="FiniteStateMachine\Wander.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="Genetics\Chromosome.cs" />
