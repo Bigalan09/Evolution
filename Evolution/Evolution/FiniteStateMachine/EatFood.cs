@@ -61,7 +61,7 @@ namespace Evolution.FiniteStateMachine
                         List<Entity> enemyList = c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Herbivore));
                         enemyList.AddRange(c.Group.GameWorld.EntityManager.InRadius(10, c.Position, typeof(Omnivore)));
                         Creature enemy = (Creature)enemyList[0];
-                        Console.WriteLine(enemy.GetType());
+
                         enemy.FSM.ChangeState(new FightCreature(c));
                         c.FSM.ChangeState(new FightCreature(enemy));
                     }

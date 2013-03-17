@@ -12,8 +12,8 @@ namespace Evolution
 {
     class EntityManager
     {
-        private Hashtable entities = new Hashtable();
-        private Hashtable newEntities = new Hashtable();
+        private List<Entity> entities = new List<Entity>();
+        private List<Entity> newEntities = new List<Entity>();
         private GameWorld gameWorld;
 
         public EntityManager(GameWorld gameWorld)
@@ -23,17 +23,17 @@ namespace Evolution
 
         public void AddEntity(Entity entity)
         {
-            if (!newEntities.ContainsKey(entity.ID))
-                newEntities.Add(entity.ID, entity);
+            if (!newEntities.Contains(entity))
+                newEntities.Add(entity);
         }
 
         public void Update(GameTime gameTime)
         {
             try
             {
-                foreach (DictionaryEntry entry in entities)
+                foreach (Entity entry in entities)
                 {
-                    ((Entity)(entry.Value)).Update(gameTime);
+                    entry.Update(gameTime);
                 }
             }
             catch (Exception) { }
@@ -41,32 +41,36 @@ namespace Evolution
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (DictionaryEntry entry in entities)
+            foreach (Entity entry in entities)
             {
-                ((Entity)(entry.Value)).Draw(spriteBatch, gameTime);
+                entry.Draw(spriteBatch, gameTime);
             }
         }
 
         public void LoadContent(ContentManager content)
         {
-            foreach (DictionaryEntry entry in entities)
+            foreach (Entity entry in entities)
             {
-                ((Entity)(entry.Value)).LoadContent(content);
+                entry.LoadContent(content);
             }
         }
 
         public Entity GetEntity(string id)
         {
-            return (Entity)entities[id];
+            foreach (Entity entry in entities)
+            {
+                if (entry.ID == id)
+                    return entry;
+            }
+            return null;
         }
 
         public List<Entity> GetAll(Type type)
         {
             List<Entity> list = new List<Entity>();
 
-            foreach (DictionaryEntry entry in entities)
+            foreach (Entity ent in entities)
             {
-                Entity ent = ((Entity)(entry.Value));
                 if (ent.GetType().Equals(type))
                     list.Add(ent);
             }
@@ -76,9 +80,9 @@ namespace Evolution
 
         public void AddEntities()
         {
-            foreach (DictionaryEntry entry in newEntities)
+            foreach (Entity entry in newEntities)
             {
-                entities.Add(entry.Key, entry.Value);
+                entities.Add(entry);
             }
             this.LoadContent(gameWorld.GameRef.Content);
             newEntities.Clear();
@@ -94,16 +98,11 @@ namespace Evolution
 
         public void RemoveEntities()
         {
-            object[] keys = new object[entities.Count];
-            entities.Keys.CopyTo(keys, 0);
 
-            for (int index = keys.Length - 1; index >= 0; --index)
+            for (int i = entities.Count - 1; i >= 0; i--)
             {
-                Entity ent = ((Entity)entities[keys[index]]);
-                if (!ent.Alive)
-                {
-                    entities.Remove(keys[index]);
-                }
+                if (!entities[i].Alive)
+                    entities.RemoveAt(i);
             }
         }
 
@@ -114,13 +113,10 @@ namespace Evolution
 
         public void RemoveAll(Type type)
         {
-            object[] keys = new object[this.entities.Count];
-            this.entities.Keys.CopyTo(keys, 0);
-
-            for (int index = keys.Length - 1; index >= 0; --index)
+            for (int i = entities.Count - 1; i >= 0; i--)
             {
-                if (entities[keys[index]].GetType().Equals(type))
-                    entities.Remove(keys[index]);
+                if (entities[i].GetType().Equals(type))
+                    entities.RemoveAt(i);
             }
         }
 
@@ -132,9 +128,8 @@ namespace Evolution
         public List<Entity> InRadius(float radius, Vector2 position, Type type)
         {
             List<Entity> inRadius = new List<Entity>();
-            foreach (DictionaryEntry entry in entities)
+            foreach (Entity ent in entities)
             {
-                Entity ent = ((Entity)(entry.Value));
                 if ((ent.Position + ent.Origin - position).Length() <= radius && ent.GetType().Equals(type))
                     inRadius.Add(ent);
             }
