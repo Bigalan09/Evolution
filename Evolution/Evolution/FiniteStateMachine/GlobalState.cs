@@ -50,7 +50,7 @@ namespace Evolution.FiniteStateMachine
                     }
                     if (c.Energy > 35 && c.Age > 4 && !c.FSM.IsInState(typeof(Reproduce)) && !c.FSM.IsInState(typeof(FightCreature))) // need fitness function here
                     {
-                        List<Entity> partnerList = c.Group.GameWorld.EntityManager.InRadius(c.Sight, c.Position, c.GetType());
+                        List<Entity> partnerList = c.Group.GameWorld.EntityManager.InRadius(20, c.Position, c.GetType());
                         if (partnerList.Count > 0)
                         {
                             foreach (Creature partner in partnerList)

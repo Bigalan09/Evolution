@@ -48,6 +48,7 @@ namespace Evolution
         Renderer particleRenderer;
         public static Params Parameters;
         private Texture2D gui;
+        private Creature inspecting;
 
         public Game1()
         {
@@ -129,11 +130,7 @@ namespace Evolution
                 //world.ResourceManager.addResource(Mouse.GetState().X, Mouse.GetState().Y);
                 Entity ent = world.EntityManager.AtPosition(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
                 if (ent != null && ent is Creature) {
-                    Creature c = (Creature)ent;
-                    Console.WriteLine("State: " + c.FSM.CurrentState);
-                    Console.WriteLine("Age: " + c.Age);
-                    Console.WriteLine("Energy: " + c.Energy);
-                    Console.WriteLine("Storage: " + c.Carrying);
+                    inspecting = (Creature)ent;
                 }
             }
 
@@ -161,6 +158,17 @@ namespace Evolution
             spriteBatch.DrawString(font, "Omnivore: " + world.EntityManager.GetAll(typeof(Omnivore)).Count, new Vector2(25, 75), Color.SteelBlue);
             spriteBatch.DrawString(font, "Plants: " + world.EntityManager.GetAll(typeof(Resource)).Count, new Vector2(25, 100), Color.Yellow);
             spriteBatch.DrawString(font, "Crossover: " + Parameters.Crossover, new Vector2(25, 125), Color.White);
+
+            if (inspecting != null && inspecting.Alive)
+            {
+                spriteBatch.Draw(gui, new Vector2(screenBounds.Width - gui.Width - 25, 5), Color.White);
+                spriteBatch.DrawString(font, inspecting.FSM.CurrentState.ToString().Substring(29), new Vector2(screenBounds.Width - gui.Width - 5, 25), Color.White);
+                spriteBatch.DrawString(font, "Age: " + inspecting.Age, new Vector2(screenBounds.Width - gui.Width - 5, 50), Color.White);
+                spriteBatch.DrawString(font, "Strength: " + inspecting.Strength, new Vector2(screenBounds.Width - gui.Width - 5, 75), Color.White);
+                spriteBatch.DrawString(font, "Defence: " + inspecting.Defence, new Vector2(screenBounds.Width - gui.Width - 5, 100), Color.White);
+                spriteBatch.DrawString(font, "Energy: " + inspecting.Energy, new Vector2(screenBounds.Width - gui.Width - 5, 125), Color.White);
+                spriteBatch.DrawString(font, "Health: " + inspecting.Health, new Vector2(screenBounds.Width - gui.Width - 5, 150), Color.White);
+            }
             spriteBatch.End();
 
             foreach (KeyValuePair<string, ParticleEffect> particle in particleEffects)
