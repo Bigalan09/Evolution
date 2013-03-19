@@ -132,6 +132,7 @@ namespace Evolution
                 if (ent != null && ent is Creature) {
                     inspecting = (Creature)ent;
                 }
+                Game1.particleEffects["Heart"].Trigger(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
             }
 
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
